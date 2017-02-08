@@ -23,11 +23,16 @@
             <ColumnDefinition Width="41*"/>
         </Grid.ColumnDefinitions>
         <Label Margin="3" Content="Список команд:"></Label>
-        <ListView x:Name="CommandList" Grid.Column="0" Grid.Row="1" Grid.RowSpan="9" Margin="5" Loaded="CommandList_OnLoaded"></ListView>
+        <ListView x:Name="CommandList" Grid.Column="0" Grid.Row="1" Grid.RowSpan="9" Margin="5" Loaded="CommandList_OnLoaded" SelectionChanged="CommandList_SelectionChanged"></ListView>
         <Label Margin="3" Grid.Column="1" Content="Свойства:" Grid.ColumnSpan="2"></Label>
-        <ListView Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="7" Margin="5"></ListView>
-        <Button Grid.Column="3" Grid.Row="9" Margin="3" Content="Сохранить" Grid.ColumnSpan="2"></Button>
-        <ComboBox Grid.Column="1" Grid.Row="1" Margin="3" Grid.ColumnSpan="2"></ComboBox>
-        <Button x:Name="AddBt" Grid.Column="3" Grid.Row="1" Margin="3" Content="Добавить"></Button>
+        <ListView x:Name="PropListView" Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="7" Margin="5" IsEnabled="False"></ListView>
+        <Button Grid.Column="3" Grid.Row="9" Margin="3" Content="Сохранить" Grid.ColumnSpan="2" Click="Button_Click_1"></Button>
+        <ComboBox x:Name="PropCb" Grid.Column="1" Grid.Row="1" Margin="3" Grid.ColumnSpan="2" IsEnabled="False">
+            <ComboBoxItem Content="prop1"></ComboBoxItem>
+            <ComboBoxItem Content="prop2"></ComboBoxItem>
+            <ComboBoxItem Content="prop3"></ComboBoxItem>
+        </ComboBox>
+        <TextBox x:Name="ValueTb" Grid.Column="3" Grid.Row="1" Margin="3" IsEnabled="False"></TextBox>
+        <Button x:Name="AddBt" Grid.Column="4" Grid.Row="1" Margin="3" Content="Добавить" Click="AddBt_OnClick" IsEnabled="False"></Button>
     </Grid>
 </Window>
