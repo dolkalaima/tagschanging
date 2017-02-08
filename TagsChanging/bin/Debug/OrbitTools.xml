@@ -1,0 +1,662 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrbitTools</name>
+    </assembly>
+    <members>
+        <member name="T:Zeptomoby.OrbitTools.CoordGeo">
+            <summary>
+            Геоцентрические координаты
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.CoordGeo.m_Latitude">
+            <summary>
+            Широта в радианах, отрицательная величина означает Юг
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.CoordGeo.m_Longitude">
+            <summary>
+            Долгота в раданах
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.CoordGeo.m_Altitude">
+            <summary>
+            Высота над уровнем моря для элипсоидной модели
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.CoordGeo.#ctor">
+            <summary>
+            Конструктор, все поля равны нуля
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.CoordGeo.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            Конструктор с нициализацией полей
+            </summary>
+            <param name="lat">Широта в радианах, (negative south)</param>
+            <param name="lon">Долгота в раданах</param>
+            <param name="alt">Высота над уровнем моря для элипсоидной модели</param>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.CoordGeo.Latitude">
+            <summary>
+            Широта в радианах, отрицательная величина означает Юг
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.CoordGeo.Longitude">
+            <summary>
+            Долгота в радианах, отрицательная величина означает Запад
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.CoordGeo.Altitude">
+            <summary>
+            Высота над уровнем моря в км для элипсоидной модели
+            </summary>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.CoordTopo">
+            <summary>
+            Топоцентрические координаты
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.CoordTopo.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="az">Azimuth in radians</param>
+            <param name="el">Elevation in radians</param>
+            <param name="rng">Range in kilometers</param>
+            <param name="rate">Range rate of change in km/sec. Negative value means "towards observer"</param>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.CoordTopo.Azimuth">
+            <summary>
+            In radians
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.CoordTopo.Elevation">
+            <summary>
+            In radians
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.CoordTopo.Range">
+            <summary>
+            In kilometers
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.CoordTopo.RangeRate">
+            <summary>
+            Range rate of change in km/sec
+            Negative value means "towards observer"
+            </summary>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.NoradBase">
+            <summary>
+            This class provides a base class for the NORAD SGP4/SDP4 orbit models.
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.NoradBase.m_satInc">
+            <summary>
+            inclination
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.NoradBase.m_satEcc">
+            <summary>
+            eccentricity
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.NoradBase.Initialize">
+            <summary>
+            Perform the initialization of member variables, specifically the variables
+            used by derived-class objects to calculate ECI coordinates.
+            </summary>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.NoradSGP4">
+            <summary>
+            NORAD SGP4 implementation.
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.NoradSGP4.getPosition(System.Double)">
+            <summary>
+            This procedure returns the ECI position and velocity for the satellite
+            in the orbit at the given number of minutes since the TLE epoch time
+            using the NORAD Simplified General Perturbation 4, near earth orbit
+            model.
+            </summary>
+            <param name="tsince">Time in minutes since the TLE epoch (GMT)</param>
+            <returns>ECI object to hold position information.
+            To convert the returned ECI position vector to km, multiply each component by:  (XKMMPER / Globals.AE).
+            To convert the returned ECI velocity vector to km/sec, multiply each component by:
+                  (XKMPER / Globals.AE) * (MIN_PER_DAY / 86400).
+            </returns>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.Julian">
+            <summary>
+            Encapsulates a Julian date.
+            This class encapsulates Julian dates with the epoch of 12:00 noon (12:00 UT)
+            on January 1, 4713 B.C. Some epoch dates:
+                01/01/1990 00:00 UTC - 2447892.5
+                01/01/1990 12:00 UTC - 2447893.0
+                01/01/2000 00:00 UTC - 2451544.5
+                01/01/2001 00:00 UTC - 2451910.5
+            
+            Note the Julian day begins at noon, which allows astronomers to have the
+            same date in a single observing session.
+            
+            References:
+            "Astronomical Formulae for Calculators", Jean Meeus
+            "Satellite Communications", Dennis Roddy, 2nd Edition, 1995.
+            "Spacecraft Attitude Determination and Contol", James R. Wertz, 1984
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Julian.m_Date">
+            <summary>
+            Julian date
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Julian.m_Year">
+            <summary>
+            Year including century
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Julian.m_Day">
+            <summary>
+            Day of year, 1.0 = Jan 1 00h
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Julian.#ctor(System.DateTime)">
+            <summary>
+            Create a Julian date object from a DateTime object. The time
+            contained in the DateTime object is assumed to be UTC.
+            </summary>
+            <param name="dt"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Julian.#ctor(System.Int32,System.Double)">
+            <summary>
+            Create a Julian date object from a year and day of year.
+            The year is given with the century (i.e. 2001).
+            The integer part of the day value is the day of year, with 1 meaning
+            January 1.
+            The fractional part of the day value is the fractional portion of
+            the day.
+            Examples: 
+              day = 1.0  Jan 1 00h
+              day = 1.5  Jan 1 12h
+              day = 2.0  Jan 2 00h  
+            </summary>
+            <param name="year"></param>
+            <param name="day"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Julian.Initialize(System.Int32,System.Double)">
+            <summary>
+            Initialize the Julian object.
+            The first day of the year, Jan 1, is day 1.0. Noon on Jan 1 is
+            represented by the day value of 1.5, etc.
+            </summary>
+            <param name="year"></param>
+            <param name="day"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Julian.toGMST">
+            <summary>
+            Calculate Greenwich Mean Sidereal Time for the Julian date. The 
+            return value is the angle, in radians, measuring eastward from the
+            Vernal Equinox to the prime meridian. This angle is also referred
+            to as "ThetaG" (Theta GMST).
+            
+            References:
+               The 1992 Astronomical Almanac, page B6.
+               Explanatory Supplement to the Astronomical Almanac, page 50.
+               Orbital Coordinate Systems, Part III, Dr. T.S. Kelso, 
+                 Satellite Times, Nov/Dec 1995
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Julian.toLMST(System.Double)">
+            <summary>
+            Calculate Local Mean Sidereal Time for given longitude (for this date).
+            The longitude is assumed to be in radians measured west from Greenwich.
+            The return value is the angle, in radians, measuring eastward from the
+            Vernal Equinox to the given longitude.
+            </summary>
+            <param name="lon"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Julian.toTime">
+            <summary>
+            Convert to type DateTime.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.NoradSDP4">
+            <summary>
+            NORAD SDP4 implementation.
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.NoradSDP4.getPosition(System.Double)">
+            <summary>
+            This procedure returns the ECI position and velocity for the satellite
+            in the orbit at the given number of minutes since the TLE epoch time
+            using the NORAD Simplified General Perturbation 4, "deep space" orbit
+            model.
+            
+            
+            </summary>
+            <param name="tsince">Time in minutes since the TLE epoch (GMT).</param>
+            <returns>pointer to location to store the ECI data
+            To convert the returned ECI position vector to km, multiply each component by: (XKMMPER / Globals.AE).
+            To convert the returned ECI velocity vector to km/sec, multiply each component by:
+                (XKMPER / Globals.AE) * (MIN_PER_DAY / 86400)
+            </returns>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.Tle">
+            <summary>
+            This class encapsulates a single set of standard NORAD two-line elements.
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Tle.getField(Zeptomoby.OrbitTools.Tle.Field)">
+            <summary>
+            Returns the requested TLE data field.
+            </summary>
+            <param name="fld">The field to return.</param>
+            <returns>The requested field, in native form.</returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Tle.getField(Zeptomoby.OrbitTools.Tle.Field,Zeptomoby.OrbitTools.Tle.Unit)">
+            <summary>
+            Returns the requested TLE data field as a type double.
+            </summary>
+            <remarks>
+            The numeric return values are cached; requesting the same field 
+            repeatedly incurs minimal overhead.
+            </remarks>
+            <param name="fld">The TLE field to retrieve.</param>
+            <param name="units">Specifies the units desired.</param>
+            <returns>
+            The requested field's value, converted to the correct units if necessary.
+            </returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Tle.getField(Zeptomoby.OrbitTools.Tle.Field,System.Boolean)">
+            <summary>
+            Returns the requested TLE data field in native form as a text string.
+            </summary>
+            <param name="fld">The TLE field to retrieve.</param>
+            <param name="AppendUnits">If true, the native units are appended to 
+            the end of the returned string.</param>
+            <returns>The requested field as a string.</returns>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.Vector">
+            <summary>
+            Encapsultes a simple 4-component vector
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Vector.Mul(System.Double)">
+            <summary>
+            Multiply each component in the vector by 'factor'.
+            </summary>
+            <param name="factor"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Vector.Sub(Zeptomoby.OrbitTools.Vector)">
+            <summary>
+            Subtract a vector from this one
+            </summary>
+            <param name="vec"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Vector.Angle(Zeptomoby.OrbitTools.Vector)">
+            <summary>
+            Calculate the angle between this vector and another
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Vector.Magnitude">
+            <summary>
+            Норма вектора
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Vector.Dot(Zeptomoby.OrbitTools.Vector)">
+            <summary>
+            покопонентное умножение - скалярное произведение
+            </summary>
+            <param name="vec"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.Eci">
+            <summary>
+            Класс описания в системе геоцентрическихх координат ECI
+            Внутренние координаты, скорость и Юлианское время
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Eci.#ctor(Zeptomoby.OrbitTools.Vector,Zeptomoby.OrbitTools.Vector,Zeptomoby.OrbitTools.Julian,System.Boolean)">
+            <summary>
+            Конструктор с параметрами координат - просто заполнение 
+            </summary>
+            <param name="pos">Вектор позицц</param>
+            <param name="vel">Вектор скорости</param>
+            <param name="date">Юлианская дата</param>
+            <param name="IsAeUnits"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Eci.#ctor(Zeptomoby.OrbitTools.CoordGeo,Zeptomoby.OrbitTools.Julian)">
+            <summary>
+            Вычисляет ECI координаты из "geo" положения и даты
+            Координаты записаны в км
+            Модель Земли сфероид WGS '72
+            Reference: The 1992 Astronomical Almanac, page K11
+            Reference: www.celestrak.com (Dr. TS Kelso)
+            </summary>
+            <param name="geo"></param>
+            <param name="date"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Eci.toGeo">
+            <summary>
+            Возвратите соответствующее геодезическое положение (основанный на текущем ECI
+            координатах/Юлианской дате
+            Модель Земли сфероид WGS '72
+            Побочные эффекты: Преобразовывает положение и скоростные векторы к основанным на км единицам.
+            Reference: The 1992 Astronomical Almanac, page K12. 
+            Reference: www.celestrak.com (Dr. TS Kelso)
+            </summary>
+            <returns>геодезическое положение</returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Eci.ae2km">
+            <summary>
+            Конвертирует позицию и скорость из Globals.AE в км
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Eci.MulPos(System.Double)">
+            <summary>
+            Умножение вектора положения на factor
+            </summary>
+            <param name="factor"></param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Eci.MulVel(System.Double)">
+            <summary>
+            Умножение скорости положения на factor
+            </summary>
+            <param name="factor"></param>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.Eci.Position">
+            <summary>
+            Позиция
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.Eci.Velocity">
+            <summary>
+            Скорость
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.Eci.Date">
+            <summary>
+            Юлианская дата
+            </summary>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.Eci.Units">
+            <summary>
+            VectorUnits = None, Ae, km
+            </summary>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.Orbit">
+            <summary>
+            This class accepts a single satellite's NORAD two-line element
+            set and provides information regarding the satellite's orbit 
+            such as period, axis length, ECI coordinates, velocity, etc.
+            Most importantly, it provides ECI coordinates and 
+            velocity for the satellite.
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.mnAnomaly">
+            <summary>
+            Returns the mean anomaly in radians at given GMT.
+            At epoch, the mean anomaly is given by the elements data.
+            Cannot be a property because function signature is overloaded.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.mnAnomaly(System.DateTime)">
+            <summary>
+            Returns the mean anomaly in radians at given GMT.
+            At epoch, the mean anomaly is given by the elements data.
+            </summary>
+            <param name="gmt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.TPlusEpoch(System.DateTime)">
+            <summary>
+            Returns elapsed time from epoch to given time.
+            Note: "Predicted" TLEs can have epochs in the future.
+            </summary>
+            <param name="gmt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.TPlusEpoch">
+            <summary>
+            Returns elapsed time from epoch to current time.
+            Note: "Predicted" TLEs can have epochs in the future.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.getPosition(System.Double)">
+            <summary>
+            Calculate ECI position/velocity for a given time past the epoch.
+            </summary>
+            <param name="tsince">Target time, in minutes past the TLE (UTC) epoch.</param>
+            <returns>Kilometer-based position/velocity ECI coordinates.</returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.getPosition(System.DateTime)">
+            <summary>
+            Calculate ECI position/velocity for a given time.
+            </summary>
+            <param name="gmt">Target time (GMT).</param>
+            <returns>Kilometer-based position/velocity ECI coordinates.</returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.SatName">
+            <summary>
+            Return the name of the satellite.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Orbit.SatName(System.Boolean)">
+            <summary>
+            Return the name of the satellite. If requested, the NORAD number is
+            appended to the end of the name, i.e., "ISS (ZARYA) #25544".
+            The name of the satellite with the NORAD number appended is important
+            because many satellites, especially debris, have the same name and
+            would otherwise appear to be the same satellite in output data.
+            </summary>
+            <param name="fAppendId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.Globals">
+            <summary>
+            Summary description for Globals.
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.PI">
+            <summary>
+            Число Pi
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.TWOPI">
+            <summary>
+            Число 2*Pi
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.RADS_PER_DEG">
+            <summary>
+            Радиан в грвдусе
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.GM">
+            <summary>
+            Гравиационная постоянная Земли, km^3/sec^2
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.GEOSYNC_ALT">
+            <summary>
+            GEOSYNC_ALT, km
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EARTH_RAD">
+            <summary>
+            Радиус Земли, км
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EARTH_DIA">
+            <summary>
+            Диаметр Землиб км
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.DAY_SIDEREAL">
+            <summary>
+            Продолжительность сидерического (звездного) дня, сек
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.DAY_SOLAR">
+            <summary>
+            Продолжительность солнечного дня, сек
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.AU">
+            <summary>
+            Astronomical unit (km) (IAU 76)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.SR">
+            <summary>
+            Радиус Солнца (km) (IAU 76)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.TWOTHRD">
+            <summary>
+            Две трети
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.XKMPER">
+            <summary>
+            Экваториальный радиус Земли  - km (WGS '72)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.F">
+            <summary>
+            Earth flattening (WGS '72)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.GE">
+            <summary>
+            Earth gravitational constant (WGS '72)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.J2">
+            <summary>
+            J2 harmonic (WGS '72)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.J3">
+            <summary>
+            J3 harmonic (WGS '72)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.J4">
+            <summary>
+            J4 harmonic (WGS '72)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.MIN_PER_DAY">
+            <summary>
+            Minutes per day (solar)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.SEC_PER_DAY">
+            <summary>
+            Seconds per day (solar)
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.OMEGA_E">
+            <summary>
+            Earth rotation per sidereal day
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EQ_KM_WGS72">
+            <summary>
+            Equatorial diameter, km
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EQ_AU_WGS72">
+            <summary>
+            Equatorial diameter, AU
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EQ_KMPERSEC_SOL_WGS72">
+            <summary>
+            km/sec @ equator, solar day
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EQ_KMPERSEC_SID_WGS72">
+            <summary>
+            km/sec, sidereal day
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EQ_AUPERSEC_SOL_WGS72">
+            <summary>
+            AE/sec @ eq, solar day
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.EQ_AUPERSEC_SID_WGS72">
+            <summary>
+            AE/sec @ eq, sidereal day
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.XKE">
+            <summary>
+            sqrt(ge) ER^3/min^2
+            </summary>
+        </member>
+        <member name="F:Zeptomoby.OrbitTools.Globals.QOMS2T">
+            <summary>
+            (QO - S)^4 ER^4
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Globals.AcTan(System.Double,System.Double)">
+            <summary>
+            Globals.AcTan()
+            ArcTangent of sin(x) / cos(x). The advantage of this function over arctan()
+            is that it returns the correct quadrant of the angle.
+            </summary>
+            <param name="sinx"></param>
+            <param name="cosx"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Zeptomoby.OrbitTools.Site">
+            <summary>
+            The Site class encapsulates a location on earth.
+            Describes a location on the earth. Given the ECI coordinates of a 
+            satellite, this class can generate Azimuth/Elevation look angles to 
+            the satellite.
+            </summary>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Site.#ctor(System.Double,System.Double,System.Double)">
+            <summary>
+            c'tor accepting:
+            </summary>
+            <param name="degLat">Latitude  in degress (negative south)</param>
+            <param name="degLon">Longitude in degress (negative west)</param>
+            <param name="kmAlt">Altitude  in km</param>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Site.getPosition(Zeptomoby.OrbitTools.Julian)">
+            <summary>
+            Return the ECI coordinate of the site at the given time.
+            </summary>
+            <param name="date"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Zeptomoby.OrbitTools.Site.getLookAngle(Zeptomoby.OrbitTools.Eci)">
+            <summary>
+            Return the topocentric (azimuth, elevation, etc.) coordinates for a target
+            object described by the input ECI coordinates.
+            </summary>
+            <param name="eci"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Zeptomoby.OrbitTools.Site.m_geo">
+            <summary>
+            lat, lon, alt of earth site
+            </summary>
+        </member>
+    </members>
+</doc>

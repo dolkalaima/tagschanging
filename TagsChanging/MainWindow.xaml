@@ -1,0 +1,35 @@
+﻿<Window x:Class="TagsChanging.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+            <Button x:Name="NewBt" Background="GreenYellow" Margin="3" Content="Новый список" Click="NewBt_OnClick"></Button>
+            <Button x:Name="OpenBt" Background="GreenYellow" Margin="3" Grid.Column="1" Content="Открыть список" Click="OpenBt_OnClick"></Button>
+            <Button x:Name="AddBt" Background="Yellow" Margin="3" Grid.Column="2" Content="Добавить" Click="AddBt_OnClick"></Button>
+            <Button x:Name="EditBt"  Margin="3" Grid.Column="3" Content="Редактировать"></Button>
+            <Button x:Name="SaveBt" Margin="3" Grid.Column="4" Content="Сохранить"></Button>
+            
+
+        <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="Список команд:" Margin="3"/>
+        <ListView x:Name="CommandsList" Grid.ColumnSpan="5" Grid.Column="0" Grid.Row="2" Grid.RowSpan="8" Margin="5" IsEnabled="True"></ListView>
+    </Grid>
+</Window>

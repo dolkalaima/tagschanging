@@ -1,0 +1,4990 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>INav</name>
+    </assembly>
+    <members>
+        <member name="T:INav.Navig.MoonModel">
+            <summary>
+            Модель Луны
+            </summary>
+        </member>
+        <member name="M:INav.Navig.MoonModel.GetPosition(System.DateTime)">
+            <summary>
+            Положение Луны (только направление)
+            </summary>
+            <param name="DT">время Гринвическое</param>
+            <returns>ECI координата</returns>
+        </member>
+        <member name="P:INav.Navig.MoonModel.Position">
+            <summary>
+            Положение Лунв (только направление)
+            </summary>
+            <returns>ECI координата</returns>
+        </member>
+        <member name="T:ILister.IListerApp">
+            <summary>
+            Интерфейс просмоторщика
+            </summary>
+        </member>
+        <member name="M:ILister.IListerApp.SetOwner(System.Windows.Forms.Form)">
+            <summary>
+            Ссылка на форму владельца - при использовании извне
+            </summary>
+            <param name="owner">Форма - владелец</param>
+        </member>
+        <member name="M:ILister.IListerApp.ShowForm">
+            <summary>
+            Показать форму редактора - для внешнего использования
+            </summary>
+        </member>
+        <member name="M:ILister.IListerApp.ClearList">
+            <summary>
+            Очистить лист перечня файлов
+            </summary>
+        </member>
+        <member name="M:ILister.IListerApp.AddFile(System.String)">
+            <summary>
+            Добавить новый файл в список
+            </summary>
+            <param name="fn">Полное имя добавляемого файла</param>
+        </member>
+        <member name="P:ILister.IListerApp.TextBox">
+            <summary>
+            Редактируемое поле, пока ограничено - только текстовый формат
+            Для произвольного представлеия можно пользоваться свойством ParentPanel
+            </summary>
+        </member>
+        <member name="P:ILister.IListerApp.ParentPanel">
+            <summary>
+            Панель, на которой лежит редактор, можноиспользовать для произвольной отрисовки
+            </summary>
+        </member>
+        <member name="P:ILister.IListerApp.Forma">
+            <summary>
+            Форма
+            </summary>
+        </member>
+        <member name="T:ILister.IListerPlugin">
+            <summary>
+            Плагины для просмотра в листере
+            </summary>
+        </member>
+        <member name="M:ILister.IListerPlugin.AcceptFile(System.String)">
+            <summary>
+            Насколько удобно им смотреть.
+            </summary>
+            <param name="fn">Имя файла</param>
+            <returns>
+            0 - не может открывать. 
+            1 - базовые функции. 
+            2 - шестнадцатеричное представление. 
+            3 - базовые функции - хорошо подходят
+            4 и выше - пользовательские. 
+            </returns>
+        </member>
+        <member name="M:ILister.IListerPlugin.EnterFile(ILister.IListerApp,System.String)">
+            <summary>
+            Начало отрисовки
+            </summary>
+            <param name="lister">ссылка на программу</param>
+            <param name="fn">Имя файла</param>
+        </member>
+        <member name="M:ILister.IListerPlugin.LeaveFile(ILister.IListerApp)">
+            <summary>
+            Выход из отрисовки
+            </summary>
+            <param name="lister">ссылка на программу</param>
+        </member>
+        <member name="P:ILister.IListerPlugin.Name">
+            <summary>
+            Имя, отображаемое в выборе
+            </summary>
+        </member>
+        <member name="T:INav.UIntSidEid">
+            <summary>
+             Конвертор 
+            </summary>
+        </member>
+        <member name="M:INav.UIntSidEid.IsEid(System.UInt32)">
+            <summary>
+            Показывает, что это расширенный идентификатор
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.UIntSidEid.ConfigFrame(System.UInt32,INav.CanFrame)">
+            <summary>
+            Идентификатор пишет в CanFrame
+            </summary>
+            <param name="value"></param>
+            <param name="cf"></param>
+        </member>
+        <member name="M:INav.UIntSidEid.ConfigFrame(System.UInt32,INav.CanFrame,System.Boolean)">
+            <summary>
+            Идентификатор пишет в CanFrame
+            </summary>
+            <param name="value"></param>
+            <param name="cf"></param>
+            <param name="data"></param>
+        </member>
+        <member name="M:INav.UIntSidEid.IsFrameId(System.UInt32,INav.CanFrame)">
+            <summary>
+            Проверяет, находится ли во фрейме такой же идернтификатор
+            </summary>
+            <param name="value"></param>
+            <param name="cf"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.UIntSidEid.IsFrameId(System.UInt32,INav.CanFrame,System.UInt32)">
+            <summary>
+            </summary>
+            <param name="value"></param>
+            <param name="cf"></param>
+            <param name="mask"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.UIntSidEid.IsFrameId(System.UInt32,INav.CanFrame,System.UInt32,System.Boolean)">
+            <summary>
+            Проверяет, находится ли во фрейме такой же идернтификатор
+            </summary>
+            <param name="value"></param>
+            <param name="cf"></param>        
+            <param name="mask">Маска с такими же правилами SidEid, нулевая маска не используется</param>
+            <param name="data">Фрейм с данным (проверить этот бит)</param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.SidEidConverter">
+            <summary>
+            Хранит SID или EID в uint
+            30-ый бит является флагом - если он равен "1", то это EID
+            Используйте UIntSidEid
+            </summary>
+        </member>
+        <member name="T:INav.Hex2Converter">
+            <summary>
+            Показывает hex по человечески
+            </summary>
+        </member>
+        <member name="T:INav.Hex3Converter">
+            <summary>
+            Показывает hex по человечески
+            </summary>
+        </member>
+        <member name="T:INav.Hex8Converter">
+            <summary>
+            Показывает hex по человечески
+            </summary>
+        </member>
+        <member name="T:INav.Oct4Converter">
+            <summary>
+            Показывает oct по человечески
+            </summary>
+        </member>
+        <member name="T:INav.Oct3Converter">
+            <summary>
+            Показывает oct по человечески
+            </summary>
+        </member>
+        <member name="T:INav.Oct2Converter">
+            <summary>
+            Показывает oct по человечески
+            </summary>
+        </member>
+        <member name="T:INav.OctConverter">
+            <summary>
+            Показывает oct по человечески
+            </summary>
+        </member>
+        <member name="T:INav.BooleanTypeConverter">
+            <summary>
+            Показывает bool по человечески
+            </summary>
+        </member>
+        <member name="T:INav.Function`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="R"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:INav.Function`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="A"></typeparam>
+            <typeparam name="R"></typeparam>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.Function`3">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <typeparam name="R"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.Function`4">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <typeparam name="A3"></typeparam>
+            <typeparam name="R"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.Function`5">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <typeparam name="A3"></typeparam>
+            <typeparam name="A4"></typeparam>
+            <typeparam name="R"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+            <param name="arg4"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.Function`6">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <typeparam name="A3"></typeparam>
+            <typeparam name="A4"></typeparam>
+            <typeparam name="A5"></typeparam>
+            <typeparam name="R"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+            <param name="arg4"></param>
+            <param name="arg5"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.Procedure">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:INav.Procedure`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="A"></typeparam>
+            <param name="arg"></param>
+        </member>
+        <member name="T:INav.Procedure`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+        </member>
+        <member name="T:INav.Procedure`3">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <typeparam name="A3"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+        </member>
+        <member name="T:INav.Procedure`4">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <typeparam name="A3"></typeparam>
+            <typeparam name="A4"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+            <param name="arg4"></param>
+        </member>
+        <member name="T:INav.Procedure`5">
+            <summary>
+            
+            </summary>
+            <typeparam name="A1"></typeparam>
+            <typeparam name="A2"></typeparam>
+            <typeparam name="A3"></typeparam>
+            <typeparam name="A4"></typeparam>
+            <typeparam name="A5"></typeparam>
+            <param name="arg1"></param>
+            <param name="arg2"></param>
+            <param name="arg3"></param>
+            <param name="arg4"></param>
+            <param name="arg5"></param>
+        </member>
+        <member name="T:INav.SiteInfo">
+            <summary>
+            Информация о НПУ
+            </summary>
+        </member>
+        <member name="M:INav.SiteInfo.#ctor(System.Double,System.Double,System.Double,System.String)">
+            <summary>
+            </summary>
+            <param name="lon"></param>
+            <param name="lat"></param>
+            <param name="kmalt"></param>
+            <param name="name"></param>
+        </member>
+        <member name="P:INav.SiteInfo.Site">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:INav.EnumTypeConverter">
+            <summary>
+            TypeConverter для Enum, преобразовывающий Enum к строке с
+            учетом атрибута Description
+            </summary>
+        </member>
+        <member name="M:INav.EnumTypeConverter.#ctor(System.Type)">
+            <summary>Инициализирует экземпляр</summary>
+            <param name="type">тип Enum</param>
+        </member>
+        <member name="T:INav.ITaskOrder">
+            <summary>
+            Если задаине реализует этот интерфейс. то в соответсвтии с ним сортируются задания
+            </summary>
+        </member>
+        <member name="T:INav.IInfo">
+            <summary>
+            Интерфейс, который описывает тип обработчика ТМ
+            Обяан быть консруктор без параметров
+            Классы сериализуются
+            Таблица ТМ должна настраиваться - имя файла и имя таблицы - загружается самостоятельно
+            Отображение самостоянтельно, используя ссылку на Нав
+            
+            Систем таблиц и сисетма отобажения тоже должн быть через интерфейсы 
+            и настраиваться в этом классе
+            
+            Система таблиц и отображения должна тоже сериализоваться, но иметь сссылку на владельца
+            
+            Должен иметь конструктор с путым параметром
+            
+            </summary>
+        </member>
+        <member name="M:INav.IInfo.Save(INav.InfoData)">
+            <summary>
+            Сохранить то, что принялось
+            Следующая информация будет новой
+            Перед этим обязательно выполняется AddData
+            </summary>
+        </member>
+        <member name="M:INav.IInfo.AddData(INav.InfoData)">
+            <summary>
+            Добавление данных по мере приема
+            Выполнение отображение при необходимости
+            </summary>
+            <param name="data">ссылка на данные</param>
+        </member>
+        <member name="P:INav.IInfo.Name">
+            <summary>
+            Имя, отображается в редакторе
+            По умолчанию имя закладок
+            По умолчанию расширение файлов
+            </summary>
+        </member>
+        <member name="P:INav.IInfo.Description">
+            <summary>
+            Описание телеметрии
+            </summary>
+        </member>
+        <member name="P:INav.IInfo.InfoType">
+            <summary>
+            Описание типа информации
+            Например ID, TM, TMN, Plan или другие
+            
+            Должен быть помечен атрибутами [XmlIgnore]
+            </summary>
+        </member>
+        <member name="P:INav.IInfo.Nav">
+            <summary>
+            После создания плагина, ему передается ссылка на приложение Навигатора
+            Приложение Навигатора реализует интерфес INav
+            При присвоении, можно загрузить заморозки
+            При присвоении ссылки должна быть проведена инициализация, а именно
+                внутренняя инииализация
+                создание закладок отображения и их перерисовка
+            Обратное уничтожение во время Dispose
+            
+            Должен быть помечен атрибутами [XmlIgnore] и [Browsable(false)]
+            </summary>
+        </member>
+        <member name="P:INav.IInfo.SaveNum">
+            <summary>
+            Номер следующего сохраняемого файла
+            </summary>
+        </member>
+        <member name="P:INav.IInfo.ByteCount">
+            <summary>
+            Количетсво байт (всего)
+            </summary>
+        </member>
+        <member name="T:INav.IInfoRadio">
+            <summary>
+            Данные могут приниматься по радиоканалу
+            </summary>
+        </member>
+        <member name="P:INav.IInfoRadio.RadioId">
+            <summary>
+            Идентификационные данные для радиоканала
+            </summary>
+        </member>
+        <member name="T:INav.IInfo311">
+            <summary>
+            Данные могут приниматься по радиоканалу
+            </summary>
+        </member>
+        <member name="P:INav.IInfo311.Id311">
+            <summary>
+            Идентификационные данные для радиоканала
+            </summary>
+        </member>
+        <member name="T:INav.IInfoCan">
+            <summary>
+            Данные могут приниматься по КАН
+            </summary>
+        </member>
+        <member name="P:INav.IInfoCan.CanId">
+            <summary>
+            Идентификационные данные для радиоканала
+            </summary>
+        </member>
+        <member name="T:INav.IDecodableInfo">
+            <summary>
+            Информация подлежет декорированию
+            Т.е. имеются стандартные функции декодировки ТМ - DecodeTable
+            </summary>
+        </member>
+        <member name="P:INav.IDecodableInfo.DecodeTable">
+            <summary>
+            Таблица преобразования
+            </summary>
+        </member>
+        <member name="T:INav.IInfoWithTime">
+            <summary>
+            Информация содержит бортовое время
+            Имеет параметр TimeValue
+            </summary>
+        </member>
+        <member name="T:INav.CanIdentifer">
+            <summary>
+            Идентификационные данные по КАН
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.SIDC">
+            <summary>
+            Идентификатор команды
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.MSIDC">
+            <summary>
+            Идентификатор команды
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.Commsnd">
+            <summary>
+            Сама команда
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.Frames">
+            <summary>
+            Количество 
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.SynxrBit">
+            <summary>
+            Использовать младший бит первого байта для синхронизации
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.KvitSID">
+            <summary>
+            Идентификатор квитанции
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.NeedAddTime">
+            <summary>
+            Добавлять время 
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.NeedAddTime6">
+            <summary>
+            Добавлять время 
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.NeedAddMark">
+            <summary>
+            Добавлять время 
+            </summary>
+        </member>
+        <member name="P:INav.CanIdentifer.Use">
+            <summary>
+            Использовать
+            </summary>
+        </member>
+        <member name="T:INav.D311Identifer">
+            <summary>
+            данные лдя идентификации информации по ЦМИ
+            </summary>
+        </member>
+        <member name="T:INav.CustomIni">
+            <summary>
+            От чего наследовать все настройки
+            (Можно пользоваться [XmlIgnore])
+            </summary>
+        </member>
+        <member name="P:INav.D311Identifer.InfoCode">
+            <summary>
+            Код типа информации
+            </summary>
+        </member>
+        <member name="P:INav.D311Identifer.DynamicSize">
+            <summary>
+            Динамический размер
+            Кооличество строк в номере сектора
+            </summary>
+        </member>
+        <member name="T:INav.RadioIdentifer">
+            <summary>
+            данные лдя идентификации информации по радиоканала
+            </summary>
+        </member>
+        <member name="M:INav.RadioIdentifer.Identify(System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Идентификация информации
+            </summary>
+            <param name="pusk">послений байт пуска</param>
+            <param name="sek">сектор</param>
+            <param name="str">строка</param>
+            <returns>признание</returns>
+        </member>
+        <member name="P:INav.RadioIdentifer.Povtor">
+            <summary>
+            Повтор (1 или 3)
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.Mask">
+            <summary>
+            Маска
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.Filter">
+            <summary>
+            Фильттр
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.Sector">
+            <summary>
+            Сектор
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.Pusk">
+            <summary>
+            Пуск
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.UseSector">
+            <summary>
+            Использовать сектор для идентификации
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.Use">
+            <summary>
+            Разерешить
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.DynamicSize">
+            <summary>
+            Динамический размер
+            Кооличество строк в номере сектора
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.SaveAB">
+            <summary>
+            Сохранять неисправленные файлы
+            </summary>
+        </member>
+        <member name="P:INav.RadioIdentifer.SaveMaskFile">
+            <summary>
+            Сохранять неисправленные файлы
+            </summary>
+        </member>
+        <member name="T:INav.InfoData">
+            <summary>
+            Данные для IInfo
+            </summary>
+        </member>
+        <member name="F:INav.InfoData.Data">
+            <summary>
+            Сами байты данных
+            </summary>
+        </member>
+        <member name="F:INav.InfoData.Reliability">
+            <summary>
+            Достоверность данных в процентах, от 0 до 100
+            </summary>
+        </member>
+        <member name="F:INav.InfoData.Sector">
+            <summary>
+            Сектор (при работе по радио)
+            </summary>
+        </member>
+        <member name="F:INav.InfoData.RxPointer">
+            <summary>
+            Показывает сколько уже принято
+            Указывает на следующий принятый байт
+            </summary>
+        </member>
+        <member name="T:Commands.EditCommListWindow">
+            <summary>
+            Список временных команд
+            </summary>
+        </member>
+        <member name="F:Commands.EditCommListWindow.FileName">
+            <summary>
+            Имя редактируемого файла
+            </summary>
+        </member>
+        <member name="M:Commands.EditCommListWindow.CheckForSave">
+            <summary>
+            Проверить на необходимость сохранения
+            Нужно вызывать перед выходом из приложени
+            Имя последнего файла надо пересохранить!
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Commands.EditCommListWindow.Save(System.String)">
+            <summary>
+            Сохранить
+            </summary>
+            <param name="fn"></param>
+        </member>
+        <member name="M:Commands.EditCommListWindow.Clear">
+            <summary>
+            Очистить
+            </summary>
+        </member>
+        <member name="M:Commands.EditCommListWindow.LoadFile(System.String)">
+            <summary>
+            Открыть список
+            </summary>
+            <param name="fn"></param>
+        </member>
+        <member name="M:Commands.EditCommListWindow.AddList(System.String)">
+            <summary>
+            Открыть список (добавлением)
+            </summary>
+            <param name="fn"></param>
+        </member>
+        <member name="M:Commands.EditCommListWindow.CheckList">
+            <summary>
+            Комплексная проверка списка
+            </summary>
+        </member>
+        <member name="M:Commands.EditCommListWindow.Check(System.Int32)">
+            <summary>
+            Проверка одной команды
+            </summary>
+            <param name="index">индекс проверяемой команды</param>
+            <returns></returns>
+        </member>
+        <member name="M:Commands.EditCommListWindow.OnlyDelete(Commands.Command)">
+            <summary>
+            Удаление по команде (для плана)
+            без отображения
+            </summary>
+            <param name="cmd">Какую команду надо удалить</param>
+            <returns>резуальтат</returns>
+        </member>
+        <member name="M:Commands.EditCommListWindow.View">
+            <summary>
+            Отобразить на форме
+            </summary>
+        </member>
+        <member name="M:Commands.EditCommListWindow.SaveToIdFile">
+            <summary>
+            Сохранить во рвеменный файл (при сравнении)
+            </summary>
+        </member>
+        <member name="F:Commands.EditCommListWindow.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Commands.EditCommListWindow.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Commands.EditCommListWindow.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Commands.EditCommListWindow.EnableHide">
+            <summary>
+            Разрешить прятаться при закрытии, а не уничтожаться
+            </summary>
+        </member>
+        <member name="M:INav.Addons.ToSmalString(System.Byte[])">
+            <summary>
+            Преобрахзовать массив в короткую строку
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Addons.ToSepString(System.Byte[])">
+            <summary>
+            Преобрахзовать массив в короткую строку
+            </summary>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Addons.ToInnerArray(System.String)">
+            <summary>
+            Извлеч запусанный массив (автоматическое определение сепаратора в виде тире)
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.IPlugin">
+            <summary>
+            Интерфейс ЛЮБОГО плагина для Навигатора
+            Плагин может реализовывать и другие интерфейсы плагиноа,
+            которые описывают отдельные функции и возможности
+            
+            Во время перключения спутника плагины уничтожаются и
+            создаются заново
+            
+            Методы и свйоства, которые будут вызываться не только
+            головной программой Навигатора, должны быть потокобезопасны.
+            За этим следит разработчик плагина
+            
+            Порядок создания плагина
+            1. Создание объекта
+            2. Передача ссылки Nav
+            3. Проверка свойства Posible, если ложь, то дальнейшее не выполняется
+            4. Считыванием имени
+            5. Считыание DefaultEnable (если найден впервые)
+            5. Присвоение свойства Enable
+            Далее плагин может работать событийно-ориентированно, либо в своем (им созданном) потоке,
+            либо по квантам времени от основного приложения
+            
+            Порядок выгрузки плагина
+            1. Если Enable == true, то присваивает Enable = false
+            2. Разыменовываются ссылки и далее работа сборщика мусора
+            
+            Во всех внешних модулях потоки должны быть фоновые, чтобы прибивались при закрытии
+            Но пробовать их дожидаться, в случае неудачи абортить
+            </summary>
+        </member>
+        <member name="M:INav.IPlugin.ToString">
+            <summary>
+            Преобразовать в строку - отображается во всех списках
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.IPlugin.Name">
+            <summary>
+            Имя плагина, отображается в коротких обобзначениях
+            Должно быть уникальным
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Icon16">
+            <summary>
+            Иконка, которая используется для отображения в строках
+            Размер 16x16
+            Может равняться null
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Icon32">
+            <summary>
+            Иконка, которая используется для отображения на кнопках
+            Размер 32x32
+            Может равняться null
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Icon48">
+            <summary>
+            Большая иконка
+            Размер 48x48
+            Может равняться null
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Description">
+            <summary>
+            Описание плагина, используется в подсказках, отчетах
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Nav">
+            <summary>
+            После создания плагина, ему передается ссылка на приложение Навигатора
+            Приложение Навигатора реализует интерфес INav
+            Во время присвоения ссылки НЕ должна быть произведена инициализация
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Posible">
+            <summary>
+            Разршен ла этот плагин в такой конфигурации Nav
+            Например, режим КПА или имя спутника
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Enable">
+            <summary>
+            Включен плагин или нет
+            Эта настройка храниться в Навигаторе
+            Через эту настройку плагин вклюается и выключается, 
+            соотвественно при ключени должна быть произведена инициализация,
+            а при выключении удаление себя из всех соботий и 
+            уничтожение неуправляемых ресурсов
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.DefaultEnable">
+            <summary>
+            Значение свойства Enable при нахождении плагина
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.Group">
+            <summary>
+            Группа, в которой отображается плагин
+            </summary>
+        </member>
+        <member name="P:INav.IPlugin.HelpFile">
+            <summary>
+            Имя файла помощи по плагину, должен лежать в директории Help
+            </summary>
+        </member>
+        <member name="T:INav.DynamicPropertyFilterAttribute">
+            <summary>
+            Атрибут для поддержки динамически показываемых свойств
+            </summary>
+        </member>
+        <member name="M:INav.DynamicPropertyFilterAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Конструктор  
+            </summary>
+            <param name="propName">Название свойства, от которого будет 
+            зависеть видимость</param>
+            <param name="value">Значения свойства (через запятую, если несколько), 
+            при котором свойство, к которому применен атрибут, будет видимо.</param>
+        </member>
+        <member name="P:INav.DynamicPropertyFilterAttribute.PropertyName">
+            <summary>
+            Название свойства, от которого будет зависить видимость
+            </summary>
+        </member>
+        <member name="P:INav.DynamicPropertyFilterAttribute.ShowOn">
+            <summary>
+            Значения свойства, от которого зависит видимость 
+            (через запятую, если несколько), при котором свойство, к
+            которому применен атрибут, будет видимо. 
+            </summary>
+        </member>
+        <member name="T:INav.CustomDependencyObject">
+            <summary>
+            От чего наследовать все настройки
+            (Можно пользоваться [XmlIgnore])
+            </summary>
+        </member>
+        <member name="T:INav.IConfigurablePlugin">
+            <summary>
+            Интерфейс конфигурируемых лагинов
+            </summary>
+        </member>
+        <member name="P:INav.IConfigurablePlugin.ConfigObject">
+            <summary>
+            Объект с настройками, можно дедать методы при изменении его полей
+            Этому свойству присваевается объект сразу после создания, но после проверки
+            свойства Posible
+            Сохранение происходит по требованию пользователя и 
+            перед уничтожением, если свойство ConfigModifed истино
+            
+            Отображение в редакторе - первый уровень полность, второй для списков и т.д.
+            Откат настроек происходит только на первом уровне
+            
+            Вохможно сохранять и не отображать, отображать и не сохранять и т.д.
+            регулируется соответсвующими атрибутами сериализации
+            
+            Если плагин поддерживает интерфейс IDisposable, то метод Dispose будет вызван при
+            удалинии/пересоздании менеджера плгинов
+            </summary>
+        </member>
+        <member name="P:INav.IConfigurablePlugin.ConfigModifed">
+            <summary>
+            Перед уничтожением плагина, проверяется это свойство
+            Если оно истино, то производится сохранение (причем всех плагинов)
+            Перед любым сохранением свойству присваивается ложь
+            </summary>
+        </member>
+        <member name="P:INav.IConfigurablePlugin.CofigSaveInProgram">
+            <summary>
+            Если ложь - то настройки будут сохраняться для каждого спутника индивидуально
+            Если истина, то настройки будут сохраняться одни для всех спутников
+            Значение должно быть константой и не меняться во время работы
+            </summary>
+        </member>
+        <member name="P:INav.IConfigurablePlugin.ConfigType">
+            <summary>
+            Тип настроек
+            </summary>
+        </member>
+        <member name="T:INav.IPluginsManedger">
+            <summary>
+            Управление плагинами
+            </summary>
+        </member>
+        <member name="M:INav.IPluginsManedger.FindWithIface(System.String)">
+            <summary>
+            Поиск всех, реализующих интерфейс
+            </summary>
+            <param name="name"></param>
+            <param name="iface"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IPluginsManedger.InvokeModuleMethod(System.String,System.String,System.Object[])">
+            <summary>
+            Вызвать некоторый метод некоторого плагина
+            </summary>
+            <param name="module">имя плагина</param>
+            <param name="methodName">имя метода</param>
+            <param name="param">массив параметров</param>
+            <returns>возвращенное методом значение</returns>
+        </member>
+        <member name="P:INav.IPluginsManedger.Items">
+            <summary>
+            Список плагинов по их именам
+            </summary>
+        </member>
+        <member name="T:INav.IWindowedPlugin">
+            <summary>
+            Этот интерфейс должен реализовывать каждый плагин, который использует окна
+            Реализация этого интерфйса необходима для сохранения состояния рабочего стола
+            
+            В состоие рачочего стола для плагина входит
+            1. Инспользование обобщенной настройки сохранять положение рабочего стола
+            2. Перечень открытых окон
+            3. Размеры и положение вех окон
+            </summary>
+        </member>
+        <member name="P:INav.IWindowedPlugin.Workspace">
+            <summary>
+            Элементы рабочего стоала (подразумеваются только формы)
+            </summary>
+        </member>
+        <member name="T:INav.WorkspaceForm">
+            <summary>
+            Элемент рабочего стола - окно плагина
+            </summary>
+        </member>
+        <member name="F:INav.WorkspaceForm.Inited">
+            <summary>
+            Инициализирован обхект или нет, пока
+            </summary>
+        </member>
+        <member name="M:INav.WorkspaceForm.#ctor">
+            <summary>
+            Пустой конструкток, нужет для сериализаци
+            </summary>
+        </member>
+        <member name="M:INav.WorkspaceForm.#ctor(System.String)">
+            <summary>
+            Конструктор по имени формы, создает неинициализаированных объкт
+            </summary>
+            <param name="formName">имя формы</param>
+        </member>
+        <member name="P:INav.WorkspaceForm.FormName">
+            <summary>
+            Унакальное, в пределах плагина имя формыы
+            </summary>
+        </member>
+        <member name="P:INav.WorkspaceForm.Visible">
+            <summary>
+            Видимость формы
+            </summary>
+        </member>
+        <member name="P:INav.WorkspaceForm.Size">
+            <summary>
+            Размеры формы
+            </summary>
+        </member>
+        <member name="P:INav.WorkspaceForm.Location">
+            <summary>
+            Положение формы
+            </summary>
+        </member>
+        <member name="T:INav.WindowedPlugin">
+            <summary>
+            Базовый класс для посторения оконных плагинов
+            </summary>
+        </member>
+        <member name="M:INav.WindowedPlugin.EnChange">
+            <summary>
+            Изменение состояния
+            </summary>
+        </member>
+        <member name="M:INav.WindowedPlugin.GetFormType">
+            <summary>
+            Тип окна
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.WindowedPlugin.VisibleForms">
+            <summary>
+            Список отображаемых форм
+            </summary>
+            <returns></returns>
+        </member>
+        <!-- Некорректный XML-комментарий для члена "M:INav.WindowedPlugin.CreateForm(System.Type,System.String)" проигнорирован -->
+        <member name="M:INav.WindowedPlugin.RegisterButton(System.String,System.EventHandler)">
+            <summary>
+            Регистрация кнопочки
+            </summary>
+            <param name="buttonText"></param>
+            <param name="buttonClick"></param>
+        </member>
+        <member name="P:INav.WindowedPlugin.Enable">
+            <summary>
+            Включен или выключен
+            </summary>
+        </member>
+        <member name="P:INav.WindowedPlugin.frm">
+            <summary>
+            форма
+            </summary>
+        </member>
+        <member name="P:INav.WindowedPlugin.Workspace">
+            <summary>
+            Спиок информации об окнах
+            Информацию о Visible нужно заполнять вручную с помощью спец функции
+            </summary>
+        </member>
+        <member name="T:INav.IQuatumable">
+            <summary>
+            Требует (и поддерживает) запуск по квантам, от 
+            основной программы
+            </summary>
+        </member>
+        <member name="M:INav.IQuatumable.Quantum">
+            <summary>
+            Фнкция, которая вызывается в квант времени
+            </summary>
+        </member>
+        <member name="T:INav.INavFormKeys">
+            <summary>
+            Интерфейс для плагинов, 
+            при реализации этого интерфейса и при нажатии клавиш в гоавном окне, эти события
+            транслируются в плагин
+            </summary>
+        </member>
+        <member name="M:INav.INavFormKeys.KeyDown(System.Windows.Forms.Keys)">
+            <summary>
+            Нажитие клавиш 
+            </summary>
+            <param name="KeyCode"></param>
+        </member>
+        <member name="T:INav.Plug">
+            <summary>
+            Заготовка для нового плагина
+            </summary>
+        </member>
+        <member name="F:INav.Plug.nav">
+            <summary>
+            Nav
+            </summary>
+        </member>
+        <member name="M:INav.Plug.EnChange">
+            <summary>
+            Изменение состояния
+            </summary>
+        </member>
+        <member name="M:INav.Plug.#ctor">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="P:INav.Plug.Icon16">
+            <summary>
+            Пустая иконка
+            </summary>
+        </member>
+        <member name="P:INav.Plug.Icon32">
+            <summary>
+            Пустая иконка
+            </summary>
+        </member>
+        <member name="P:INav.Plug.Icon48">
+            <summary>
+            Пустая иконка
+            </summary>
+        </member>
+        <member name="P:INav.Plug.Nav">
+            <summary>
+            Nav
+            </summary>
+        </member>
+        <member name="P:INav.Plug.Enable">
+            <summary>
+            Включен или выключен
+            </summary>
+        </member>
+        <member name="T:INav.IStaticPlugin">
+            <summary>
+            Интерфейс, который позволяет создавать один экземпляр плагина для всех спутников
+            </summary>
+        </member>
+        <member name="M:INav.IStaticPlugin.VirtualDestroy">
+            <summary>
+            Вызывается при мнимом уничтожении
+            </summary>
+        </member>
+        <member name="M:INav.IStaticPlugin.VirtualCreate">
+            <summary>
+            Вызывается при мнимом создании
+            </summary>
+        </member>
+        <member name="T:INav.INav5Plugin">
+            <summary>
+            Укащывает на придлежность задания к Nav5
+            </summary>
+        </member>
+        <member name="T:INav.IHintableTask">
+            <summary>
+            Описывает, что у задани есть подсказка
+            Внимание! Для WPF не актуально
+            </summary>
+        </member>
+        <member name="P:INav.IHintableTask.Hint">
+            <summary>
+            Строка подсказки
+            </summary>
+        </member>
+        <member name="T:INav.IIoPlugin">
+            <summary>
+            Интерфейс плагина ввода - вывода
+            Реализация может быть как локальная, так и удаленная
+            Вместе с реализацией IConfigurablePlugin получается комплект
+            
+            Удаленный сервер один для всех приложений - при запуске 
+            происходит переконфигурация  и предупреждение. Для этого 
+            можно использовать методы INav
+            
+            Перенаправление потоков данных через специальный плагин с 
+            соответствующими настройками
+            
+            Если плагин реализует несколько физических протоколов (например переход),
+            то обязательны его унутренниие настройки - какие из протоколов включены, акакие нет
+            Это необходимо для перетрансляции потоков
+            Для обеспечения работоспособности такого механизма, фильтровать нужно
+            на локальной стороне, т.к. сервер может быть один для нескольких клиентов
+            с разными настройками такого типа
+            
+            При включении, после инициализации, плагин обязан вызвать StatusChange
+            </summary>
+        </member>
+        <member name="M:INav.IIoPlugin.Transmit(INav.IoElement)">
+            <summary>
+            Запрос на передачу,
+            вызываются только те методы, которые указаны в области работы плагина
+            Вызовы идут асинхронно! - Нужно организовывать свою потокобезопасность
+            </summary>
+            <param name="ioElement">элемент на передачу</param>
+        </member>
+        <member name="M:INav.IIoPlugin.AbortTx">
+            <summary>
+            Прекратить передачу
+            </summary>
+        </member>
+        <member name="E:INav.IIoPlugin.Recive">
+            <summary>
+            Событие при чтении чего-либо с устройства
+            Т.к. система ввода-вывода раздаст это сообщение всем и только тогда отдаст управление
+            Если нужна скорость в прнятии решения, то надо взвать асинхронно - тот конец потокобезопасен
+            </summary>
+        </member>
+        <member name="P:INav.IIoPlugin.SupportTypes">
+            <summary>
+            Возвращает набор поддерживаемых типов соощений
+            Используется только на передачу
+            Желательно не создавать при каждом обращении, а иметь готовый
+            т.к. обращения к этому свойству частое
+            </summary>
+        </member>
+        <member name="P:INav.IIoPlugin.Status">
+            <summary>
+            Состояние устойсвта
+            </summary>
+        </member>
+        <member name="E:INav.IIoPlugin.StatusChange">
+            <summary>
+            Событие смены состояния
+            </summary>
+        </member>
+        <member name="P:INav.IIoPlugin.IsTxing">
+            <summary>
+            Показывает, что сейчас что-то передает
+            </summary>
+        </member>
+        <member name="T:INav.IoElementEventArgs">
+            <summary>
+            Агрументы события ввода - вывода
+            </summary>
+        </member>
+        <member name="F:INav.IoElementEventArgs.ioElement">
+            <summary>
+            Передаваемый элемент
+            </summary>
+        </member>
+        <member name="M:INav.IoElementEventArgs.#ctor(INav.IoElement)">
+            <summary>
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:INav.IoElementEventHandler">
+            <summary>
+            Тип события ввода - вывода
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:INav.IoStatusEventArgs">
+            <summary>
+            Агрументы события изменения состояния
+            </summary>
+        </member>
+        <member name="T:INav.IoStatusEventHandler">
+            <summary>
+            Тип события ввода - вывода
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:INav.IoStatus">
+            <summary>
+            Состояние плагина ввода - вывода
+            </summary>
+        </member>
+        <member name="F:INav.IoStatus.OpenCorrectly">
+            <summary>
+            Нормально открыт
+            По этому свойству выбирается цвет плагина в настройках
+            Соответсвенно, если плагин явялетя перенаправенем потока, то 
+            это свойство сегда должно быть истинным, а остальные ложные
+            </summary>
+        </member>
+        <member name="T:INav.IoElement">
+            <summary>
+            Клас одной операции ввода - вывода
+            Дополнительные Get можно добавлять с помощью хелперов 
+            и определяь принадлежность по названию типа
+            </summary>
+        </member>
+        <member name="P:INav.IoElement.Type">
+            <summary>
+            Тип содержащийся информации
+            </summary>
+        </member>
+        <member name="P:INav.IoElement.Data">
+            <summary>
+            Сами данные
+            </summary>
+        </member>
+        <member name="T:INav.CanFrame">
+            <summary>
+            Пакет CAN
+            </summary>
+        </member>
+        <member name="M:INav.CanFrame.GetDataFrame">
+            <summary>
+            Преобразует так, чтобы старший бит идентификатора был "1"
+            Возвращается новая копия
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.CanFrame.GetCommandFrame">
+            <summary>
+            Преобразует так, чтобы старший бит идентификатора был "0"
+            Возвращается новая копия
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.CanFrame.AcceptFilter(INav.CanFrame,INav.CanFrame)">
+            <summary>
+            Проверяет. подходит ли кадр под новый фильтр и маску
+            </summary>
+            <param name="mask"></param>
+            <param name="filter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.CanFrame.ToString">
+            <summary>
+            В стороку
+            ID=0x000, D(8)=0x00-00-00-00-00-00-00-00
+            ID=0x00000000, D(8)=0x00-00-00-00-00-00-00-00
+            RemoteRequst
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.CanFrame.Parse(System.String)">
+            <summary>
+            Из строки
+            ID=0x000, D(8)=0x00-00-00-00-00-00-00-00
+            ID=0x00000000, D(8)=0x00-00-00-00-00-00-00-00
+            RemoteRequst
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.IoType">
+            <summary>
+            Тип IoElement
+            По возможности, избегать user - лучше добавить новый определенный тип
+            </summary>
+        </member>
+        <member name="P:INav.MkoFrame.ByteData">
+            <summary>
+            Сформирвоать данные для передачи в порт
+            </summary>
+        </member>
+        <member name="T:INav.IIoSystem">
+            <summary>
+            Интерфейс системы ввода - вывода Навигатора
+            </summary>
+        </member>
+        <member name="M:INav.IIoSystem.OnDataSend(INav.IInfoForTx)">
+            <summary>
+            Инициализировать передачу блока данных
+            </summary>
+            <param name="info"></param>
+        </member>
+        <member name="M:INav.IIoSystem.OnCommTx(Commands.Command)">
+            <summary>
+            Передать разовую команду
+            </summary>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:INav.IIoSystem.OnCommListTx(System.Collections.Generic.List{Commands.Command})">
+            <summary>
+            Передать список команд
+            </summary>
+            <param name="commList"></param>
+        </member>
+        <member name="M:INav.IIoSystem.Transmit(INav.IoElement)">
+            <summary>
+            Запрос на передачу,
+            </summary>
+            <param name="ioElement">элемент на передачу</param>
+        </member>
+        <member name="M:INav.IIoSystem.OnSetTimeCommand(System.DateTime)">
+            <summary>
+            Установка времени
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:INav.IIoSystem.OnSetDateCommand(System.DateTime)">
+            <summary>
+            Установка даты
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="E:INav.IIoSystem.CanReceive">
+            <summary>
+            То же, то и Recive, но только для КАН
+            </summary>
+        </member>
+        <member name="E:INav.IIoSystem.Recive">
+            <summary>
+            Событие при чтении чего-либо с устройства
+            </summary>
+        </member>
+        <member name="P:INav.IIoSystem.IoPlugins">
+            <summary>
+            Список плагинов ввода вывода
+            Все, включая невключенные - есть даже возможность программно 
+            включить или изменить чиь - то настройки
+            </summary>
+        </member>
+        <member name="E:INav.IIoSystem.CommListTranslate">
+            <summary>
+            Передан список временных команд
+            </summary>
+        </member>
+        <member name="E:INav.IIoSystem.CommTransmit">
+            <summary>
+            Передана разовая команда
+            </summary>
+        </member>
+        <member name="E:INav.IIoSystem.DataTranslate">
+            <summary>
+            Передача массива данных
+            </summary>
+        </member>
+        <member name="E:INav.IIoSystem.SetTimeCommand">
+            <summary>
+            Пердача команды установки времени
+            </summary>
+        </member>
+        <member name="E:INav.IIoSystem.SetDateCommand">
+            <summary>
+            Команда установки даты
+            </summary>
+        </member>
+        <member name="T:INav.CommListTranslateEventHandler">
+            <summary>
+            Делегат передачи списа команд
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.CommEventArgs">
+            <summary>
+            Аргументы при передаче команды
+            </summary>
+        </member>
+        <member name="F:INav.CommEventArgs.Command">
+            <summary>
+            Передаваемая команда
+            </summary>
+        </member>
+        <member name="T:INav.CommTranslateEventHandler">
+            <summary>
+            Делегат передачи команды
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="T:INav.SetDateTimeEventArgs">
+            <summary>
+            Аргумент устновки времени или даты
+            </summary>
+        </member>
+        <member name="T:INav.SetDateTimeCommandEventHandler">
+            <summary>
+            Установка даты или\и вермени
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:INav.DataSendEventArgs">
+            <summary>
+            Аргументы при передаче данных
+            </summary>
+        </member>
+        <member name="F:INav.DataSendEventArgs.InfoForTx">
+            <summary>
+            Передаваемые даные
+            </summary>
+        </member>
+        <member name="T:INav.DataSendTranslateEventHandler">
+            <summary>
+            Делегат передачи данных
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="F:INav.DefParamCmdEditorForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:INav.DefParamCmdEditorForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:INav.DefParamCmdEditorForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:Commands.CommManager.Load(System.String)">
+            <summary>
+            Загрузить список из файлов
+            </summary>
+            <param name="fileName">Имя файла структуры NclFilesClass</param>
+            <returns>список ошибок, или пустой список</returns>
+        </member>
+        <member name="M:Commands.CommManager.AddEditorType(System.Type)">
+            <summary>
+            Добавляет в ранилище допустимый редактор параетрических команд
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:Commands.CommManager.GetEditors">
+            <summary>
+            Перечень найденных редакторов параметриеских команд
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Commands.NclFilesClass">
+            <summary>
+            Настройки чтения файлов команд
+            </summary>
+        </member>
+        <member name="P:Commands.NclDataClass.Items">
+            <summary>
+            Список команд
+            </summary>
+        </member>
+        <member name="P:Commands.NclDataClass.Groups">
+            <summary>
+            Группы
+            </summary>
+        </member>
+        <member name="M:Commands.EditorDescription.#ctor(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type">описние типа, РЕАЛИЗУЮЩЕГО ИНТЕРФЕЙС IParamCmdEditor</param>
+        </member>
+        <member name="T:Commands.IParamCmdEditor">
+            <summary>
+            Редактор команд с параметром
+            </summary>
+        </member>
+        <member name="M:Commands.IParamCmdEditor.BeginEdit(System.Windows.Forms.Control,System.Byte[])">
+            <summary>
+            Начать редактирвоание
+            </summary>
+            <param name="parent"></param>
+            <param name="param"></param>
+        </member>
+        <member name="M:Commands.IParamCmdEditor.Validate">
+            <summary>
+            Проверить редактируемую команду
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Commands.IParamCmdEditor.GetParam">
+            <summary>
+            Получить редактируемую команду
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Commands.IParamCmdEditor.GetDescription(Commands.Command)">
+            <summary>
+            Вернуть описание ПАРАМЕТРА. Использовать как статический метод (не использовать внутренние поля)
+            Если номер не меняет описания, то его не использовать в описании
+            </summary>
+            <param name="comm"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Commands.UstCmdEditorForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Commands.UstCmdEditorForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Commands.UstCmdEditorForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:INav.TaskReportInformation">
+            <summary>
+            Описание настроек генерации отчета по списку заданий
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.ReportType">
+            <summary>
+            Тип отчета
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.CompressType">
+            <summary>
+            Сжатие
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.AddInfo">
+            <summary>
+            Дополнительная информация
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.ReportSource">
+            <summary>
+            Источник отчета
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.EnSign">
+            <summary>
+            Добавлять подпись
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.EnBoldingForOperator">
+            <summary>
+            Добавлять подпись
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.SaveOneFile">
+            <summary>
+            Объединить отчет по нескольким тестам в один файл
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.Sign">
+            <summary>
+            Подпись разработчика
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.SubSigns">
+            <summary>
+            Подпись проводивших испытания
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.Prefix">
+            <summary>
+            Префикс
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.Time">
+            <summary>
+            Записывать время
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.TotalTime">
+            <summary>
+            Записывать время
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.TaskTime">
+            <summary>
+            Записыать время выполения задания
+            </summary>
+        </member>
+        <member name="P:INav.TaskReportInformation.FastTaskTime">
+            <summary>
+            Записывать время выполения для заданий со временем меньше и равным 1 секунды
+            </summary>
+        </member>
+        <member name="T:INav.IVerefyableTask">
+            <summary>
+            Описывает задание, которое может проверить себя на корректрость
+            </summary>
+        </member>
+        <member name="M:INav.IVerefyableTask.IsCorrect">
+            <summary>
+            Возвращает сообщение об ошибке, либо пустой список
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:INav.ITaskList">
+            <summary>
+            Один список заданий
+            </summary>
+        </member>
+        <member name="M:INav.ITaskList.GetCaption(System.String@,System.String@)">
+            <summary>
+            Возвращает заголовок и описание
+            </summary>
+            <param name="caption"></param>
+            <param name="descrip"></param>
+        </member>
+        <member name="M:INav.ITaskList.PluginsNeedDetail">
+            <summary>
+            Список требемых плагинов с описанием
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.PluginsNeed">
+            <summary>
+            Список требуемых плагинов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.AssemblyNeed">
+            <summary>
+            Список требуемых сборок
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.FilesNeed">
+            <summary>
+            Список требуемых файлов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.RequrementsNeed">
+            <summary>
+            дополнительные требования для выполнения этого тестаы
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.XmlParagrafInfo">
+            <summary>
+            Формирвоание отчета по параграфам
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.XmlParagrafShortInfo">
+            <summary>
+            Формирвоание короткого отчета по параграфам
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.FixError(System.Int32,System.String,System.String)">
+            <summary>
+            Сообщение об ошибке
+            Эквивалентно IncErrorCount. Предполагается использовать в потоковых заданиях
+            </summary>
+            <param name="index"></param>
+            <param name="task"></param>
+            <param name="s"></param>
+        </member>
+        <member name="M:INav.ITaskList.IsCorrect">
+            <summary>
+            Проверят корректность списка
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskList.GenerateErrorReport">
+            <summary>
+            Сфорировать отчет об ошибках
+            </summary>
+        </member>
+        <member name="M:INav.ITaskList.Load(System.String)">
+            <summary>
+            Загрузить из файла
+            </summary>
+            <param name="fn"></param>
+        </member>
+        <member name="M:INav.ITaskList.Refresh">
+            <summary>
+            Обновить список 
+            Вначале список будет остановлен
+            </summary>
+        </member>
+        <member name="M:INav.ITaskList.DoStep(System.Boolean,System.Boolean)">
+            <summary>
+            Один шаг заданий
+            </summary>
+            <param name="skipBreakpoint">Пропустить точку останова</param>
+        </member>
+        <member name="M:INav.ITaskList.FromBegining">
+            <summary>
+            Указатель установить на начало
+            </summary>
+        </member>
+        <member name="M:INav.ITaskList.FromIndex(System.Int32)">
+            <summary>
+            Установить указатель на индекс
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:INav.ITaskList.Start">
+            <summary>
+            Начать выполение
+            </summary>
+        </member>
+        <member name="M:INav.ITaskList.Stop">
+            <summary>
+            Остановить выполнение
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.XmlInfoProperty">
+            <summary>
+            Информация о структуре
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.IsStepOreration">
+            <summary>
+            Указывает, что задание этого списка выполнено в разом шагу
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.ErrorReportNumber">
+            <summary>
+            Описывает номер текущего протокола об ошибках
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.IsSelected">
+            <summary>
+            Выбран в редакторе
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.IsAutoMode">
+            <summary>
+            Указывает. что тест запущен в автоматическом режиме
+            В этом режиме не нужно показывать сообщений
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.ExeIndex">
+            <summary>
+            Номер команды, которая будет исполняться
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.ErrorsDescription">
+            <summary>
+            Список ошибок для протокола проведения испытаний
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.GlobalVariables">
+            <summary>
+            Глобальные переменные для обмена данными из разный заданий
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.Modifed">
+            <summary>
+            Изменен ли
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.Items">
+            <summary>
+            Список команд
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.Cicle">
+            <summary>
+            Выполнять по кругу, по умаолчанию false
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.FileName">
+            <summary>
+            Имя редактриуемого файла. если оно естьы
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.FullName">
+            <summary>
+            Имя редактриуемого файла. если оно естьы
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.TimeLong">
+            <summary>
+            Время выполнения списка
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.TimeLast">
+            <summary>
+            Времени прошло
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.IsRuning">
+            <summary>
+            Запущен ли список
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.IsStep">
+            <summary>
+            Шаг, а не выполнение
+            </summary>
+        </member>
+        <member name="P:INav.ITaskList.ListComplite">
+            <summary>
+            Сколько процентов выполнено списка
+            от 0 до 100
+            </summary>
+        </member>
+        <member name="T:INav.Tasks.ITaskInit">
+            <summary>
+            Интерфейс используется для заданий, которые нужно инициализировать в некоторых слчаях
+            Предполагается, что интерфейс будет расширяться.
+            Т.к. эти действия будт производиться для каждой команды, то действий будет много, 
+            поэтому я не реализовывал его в основном классе
+            </summary>
+        </member>
+        <member name="M:INav.Tasks.ITaskInit.BeforeStart(System.Boolean)">
+            <summary>
+            Перед запуском теста
+            </summary>
+            <param name="readyExeIndex">заданий будет выполнено, т.е. указатель выполнения меньше индекса этой команды</param>
+        </member>
+        <member name="M:INav.Tasks.ITaskInit.ClearError">
+            <summary>
+            Удаляет внурение ошибки в задании
+            </summary>
+        </member>
+        <member name="M:INav.Comparation.CompareValues(INav.ComparationType,System.String,System.String)">
+            <summary>
+            Сравнение строк, вовращает результат
+            </summary>
+            <param name="Type">Тип сравнения</param>
+            <param name="calcValue">То, что должно быть</param>
+            <param name="v">То, что сравниваем</param>
+            <returns>Сообщение об ошибке, либо пустая строка</returns>
+        </member>
+        <member name="T:INav.IWordReportTask">
+            <summary>
+            Отчет Word
+            </summary>
+        </member>
+        <member name="M:INav.IWordReportTask.WordReport(INav.TaskReportInformation,System.Object,INav.Procedure{System.String})">
+            <summary>
+            Отчет с дотупом в Word
+            </summary>
+            <param name="word"></param>
+            <param name="addXmlFunction"></param>
+        </member>
+        <member name="T:INav.IThreadTask">
+            <summary>
+            Описывает, что нужно запускать Execute в отдельном потоке
+            Задание при этом берет полную отвественность за потокобезопастноть
+            Вохвращаемое значение Execute не анализируется
+            </summary>
+        </member>
+        <member name="P:INav.IThreadTask.RunAtThread">
+            <summary>
+            True, если требуется запусть в отдельном потоке
+            </summary>
+        </member>
+        <member name="T:INav.ITaskNeedInfo">
+            <summary>
+            Описывает , что нужно заданию для его нормальной работы
+            </summary>
+        </member>
+        <member name="P:INav.ITaskNeedInfo.Plugins">
+            <summary>
+            Набор требуемых плагинов
+            </summary>
+        </member>
+        <member name="P:INav.ITaskNeedInfo.Files">
+            <summary>
+            Набор требуемых дополнительных файлов
+            </summary>
+        </member>
+        <member name="P:INav.ITaskNeedInfo.Requrements">
+            <summary>
+            Дополнительные требования
+            </summary>
+        </member>
+        <member name="M:INav.IPassTable.NextPass(System.DateTime,System.Double,Zeptomoby.OrbitTools.Site,System.Double,System.Double,Zeptomoby.OrbitTools.Tle,System.Int32,System.Boolean)">
+            <summary>
+            Поиск последующего сеанса дл вреени t
+            Если сеанс не найден в ближайших 100 витоков генерит исключение
+            </summary>
+            <param name="t0">Время начала поиска, время местное</param>
+            <param name="nullElevation">Уровень нулевого угла места в шрадусах</param>
+            <param name="site">Данные назеного пукнта управления</param>
+            <param name="antAzimuthLimit">Угол ограничителя управления антен в градусах</param>
+            <param name="tsince">Смещение восходящего узла в минутах</param>
+            <param name="tle">Навигационные данные</param>
+            <param name="tleIndex">Номер в навигационных данных</param>
+            <param name="firstRun">Признак первого запуска - разрешает катиться назад</param>
+            <returns>Инфорация о сеансе</returns>
+        </member>
+        <member name="M:INav.IPassTable.Update(System.DateTime)">
+            <summary>
+            Обновить список на заданное время, время местное
+            </summary>
+            <param name="t0"></param>
+        </member>
+        <member name="P:INav.IPassTable.NeedUpdateTime">
+            <summary>
+            Время, когда надо обновить список - ЗАКОНЧИТСЯ какой-то сеанс
+            </summary>
+        </member>
+        <member name="P:INav.IPassTable.PassCount">
+            <summary>
+            Колиество расчитываетых сеансов для каждого спутника
+            </summary>
+        </member>
+        <member name="T:INav.Pass">
+            <summary>
+            Информация о сеансе с КА
+            </summary>
+        </member>
+        <member name="F:INav.Pass.NoGoto">
+            <summary>
+            Этот признак показывает
+            Если исина, то на этот сеанс уже были переключения, или они были отменены пользователем
+            , что означает, что на него не нужн переключаться автоматически
+            Если ложь, то на этот сеанс можно переключаться автоматически
+            </summary>
+        </member>
+        <member name="M:INav.Pass.NowIsPass(System.DateTime,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Определение, есть ли этот сеанс в нужное время
+            </summary>
+            <param name="t">Текущее время, время местное</param>
+            <param name="before">Предупреждение</param>
+            <param name="after">Послеслежение</param>
+            <returns>Признак сеанса</returns>
+        </member>
+        <member name="M:INav.Pass.ToLongString">
+            <summary>
+            В строку
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Pass.FormatString(System.String,System.Int32)">
+            <summary>
+            Форматирование строки пробелами в конце
+            </summary>
+            <param name="s">строка </param>
+            <param name="count">количсво символов</param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Pass.FormatString(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Форматирование строки пробелами
+            </summary>
+            <param name="s">строка</param>
+            <param name="count">количество символов</param>
+            <param name="before">Если истина. то пробелы в начале</param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Pass.ToTableString(System.Boolean)">
+            <summary>
+            Для табличного представления
+            </summary>
+            <param name="addSatName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:INav.Pass.TimeStart">
+            <summary>
+            Время начала сеанса, время местное
+            </summary>
+        </member>
+        <member name="P:INav.Pass.TimeFinish">
+            <summary>
+            Врея окончания сеанса, время местное
+            </summary>
+        </member>
+        <member name="P:INav.Pass.TimeApoge">
+            <summary>
+            Врея апогея, время местное
+            </summary>
+        </member>
+        <member name="P:INav.Pass.ApogeElevator">
+            <summary>
+            Максиальный угол места в градусах
+            </summary>
+        </member>
+        <member name="P:INav.Pass.StartAzimuth">
+            <summary>
+            Азимут входа в зону радиовидимости в градусах
+            </summary>
+        </member>
+        <member name="P:INav.Pass.FinishAzimuth">
+            <summary>
+            Азимут выхода из зоны радиовидимости в градусах
+            </summary>
+        </member>
+        <member name="P:INav.Pass.ApogeAzimuth">
+            <summary>
+            Азимут точки апогея в градусах
+            </summary>
+        </member>
+        <member name="P:INav.Pass.SatName">
+            <summary>
+            Имя спутника
+            </summary>
+        </member>
+        <member name="P:INav.Pass.InverseAntenControl">
+            <summary>
+            Обратное слежение антенн
+            </summary>
+        </member>
+        <member name="P:INav.Pass.Rev">
+            <summary>
+            Виток
+            </summary>
+        </member>
+        <member name="P:INav.Pass.TleIndex">
+            <summary>
+            Поле для определения, к кому относится
+            </summary>
+        </member>
+        <member name="F:INav.Hex16ParamCmdEditorForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:INav.Hex16ParamCmdEditorForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:INav.Hex16ParamCmdEditorForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:INav.VisualTmNamespace.VisualTm">
+            <summary>
+            Логика взаимодействия для VisualTm.xaml
+            </summary>
+            <summary>
+            VisualTm
+            </summary>
+        </member>
+        <member name="F:INav.VisualTmNamespace.VisualTm.ContentProperty">
+            <summary>
+            Registers a dependency property as backing store for the Content property
+            </summary>
+        </member>
+        <member name="M:INav.VisualTmNamespace.VisualTm.Resize">
+            <summary>
+            Обновить размеры (масштаб)
+            </summary>
+        </member>
+        <member name="M:INav.VisualTmNamespace.VisualTm.UpdateVisualBinding">
+            <summary>
+            Пробежать по всем элементам свойства Content
+            </summary>
+        </member>
+        <member name="M:INav.VisualTmNamespace.VisualTm.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:INav.VisualTmNamespace.VisualTm.Content">
+            <summary>
+            Gets or sets the Content.
+            </summary>
+            <value>The Content.</value>
+        </member>
+        <member name="P:INav.VisualTmNamespace.VisualTm.Nav">
+            <summary>
+            Нужен для управления, может быть равен null
+            </summary>
+        </member>
+        <member name="P:INav.VisualTmNamespace.VisualTm.Table">
+            <summary>
+            То, через что получаются значения параметров
+            </summary>
+        </member>
+        <member name="T:INav.Config">
+            <summary>
+             Статический класс для сохранения и загрузки настроек
+            </summary>
+        </member>
+        <member name="M:INav.Config.OpenInstance``1(System.String)">
+            <summary>
+            Возвращает нужный объект как объект
+            </summary>
+            <typeparam name="T">Тип рассматриваемых обектов</typeparam>
+            <param name="fileName">Имя файла</param>
+            <returns>Объект с настройками</returns>
+        </member>
+        <member name="M:INav.Config.OpenInstance``1(System.String,System.Xml.Serialization.XmlSerializer)">
+            <summary>
+            Возвращает нужный объект как объект
+            </summary>
+            <typeparam name="T">Тип рассматриваемых обектов</typeparam>
+            <param name="fileName">Имя файла</param>
+            <param name="xs">Сериализатор</param>
+            <returns>Объект с настройками</returns>
+        </member>
+        <member name="M:INav.Config.OpenInstance(System.Type,System.String,System.Xml.Serialization.XmlSerializer)">
+            <summary>
+             Возвращает нужный объект как объект. Не пишет в протокол при ошибке ввода-вывода!
+            </summary>
+            <param name="type">Тип рассматриваемых обектов</param>
+            <param name="fileName">Имя файла</param>
+            <param name="xs">Сериализатор</param>
+            <returns>Объект с настройками</returns>
+        </member>
+        <member name="M:INav.Config.SaveRus(System.Object,System.String)">
+            <summary>
+            Сохранение настроек в файл
+            </summary>
+            <param name="cnf">Объект с настройками</param>
+            <param name="fileName">Имя файла</param>
+        </member>
+        <member name="M:INav.Config.SaveRus(INav.CustomIni,System.String,System.Xml.Serialization.XmlSerializer)">
+            <summary>
+            Сохранение настроек в файл
+            </summary>
+            <param name="cnf">Объект с настройками</param>
+            <param name="fileName">Имя файла</param>
+            <param name="xs">Сериализатор</param>
+        </member>
+        <member name="M:INav.Config.Rollback``1(``0,``0)">
+            <summary>
+            Откат настроек
+            </summary>
+            <typeparam name="T">Тип рассматриваемых обектов</typeparam>
+            <param name="to">Куда вносить изменения</param>
+            <param name="from">Откуда вносить изменения</param>
+        </member>
+        <member name="M:INav.Config.Rollback(System.Type,INav.CustomIni,INav.CustomIni)">
+            <summary>
+            Откат настроек
+            </summary>
+            <param name="T">Тип рассматриваемых обектов</param>
+            <param name="to">Куда вносить изменения</param>
+            <param name="from">Откуда вносить изменения</param>
+        </member>
+        <member name="M:INav.CollectionTypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Только в строку
+            </summary>
+        </member>
+        <member name="M:INav.CollectionTypeConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+            И только так
+            </summary>
+        </member>
+        <member name="T:INav.FormPositionSettings">
+            <summary>
+            Клас, в котором сохраняются парамтры положения окна
+            </summary>
+        </member>
+        <member name="M:INav.FormPositionSettings.Configurate(System.Windows.Forms.Form)">
+            <summary>
+            Конфигурировать форму
+            </summary>
+            <param name="frm"></param>
+        </member>
+        <member name="M:INav.FormPositionSettings.Import(System.Windows.Forms.Form)">
+            <summary>
+            Состчитать положение с формы
+            </summary>
+            <param name="frm"></param>
+        </member>
+        <member name="P:INav.FormPositionSettings.CollectFormSize">
+            <summary>
+            Размер окна
+            </summary>
+        </member>
+        <member name="P:INav.FormPositionSettings.CollectFormLocation">
+            <summary>
+            Положение
+            </summary>
+        </member>
+        <member name="P:INav.FormPositionSettings.Correct">
+            <summary>
+            Проверка данных
+            </summary>
+        </member>
+        <member name="T:INav.UiCollectionEditor">
+            <summary>
+            Свой CollectionEditor для редактирования списка  -
+            для задания заголовка и запоминания положения окна
+            </summary>
+        </member>
+        <member name="M:INav.UiCollectionEditor.#ctor(System.Type)">
+            <summary>
+            Конструктор
+            </summary>
+        </member>
+        <member name="M:INav.UiCollectionEditor.CreateCollectionForm">
+            <summary>
+            Перекрытый метод создания формы редактора - 
+            для сохранения/восстановления размеров и положения окна
+            </summary>
+        </member>
+        <member name="T:INav.Cripto">
+            <summary>
+            Средства защиты и шифрования
+            Шифрование алгоритмом DES3
+            Например, кодирование строк 
+            можно использовать для сиохранеия данных о лищензии
+            Кодирование байтов подходит для кодирования бинарных данных, 
+            таких как перчень доступных команд, возможны другие варанты
+            </summary>
+        </member>
+        <member name="M:INav.Cripto.CodeStringToString(System.String,System.String)">
+            <summary>
+            Кодинрование строки в строку
+            </summary>
+            <param name="s">исходная строка</param>
+            <param name="key">ключ (пароль)</param>
+            <returns>Защифрованная строка</returns>
+        </member>
+        <member name="M:INav.Cripto.DecodeStringToString(System.String,System.String)">
+            <summary>
+            Раскодинрование строки в строку
+            </summary>
+            <param name="s">исходная строка</param>
+            <param name="key">ключ (пароль)</param>
+            <returns>Расщифрованная строка</returns>
+        </member>
+        <member name="M:INav.Cripto.CodeBytes(System.Byte[],System.String)">
+            <summary>
+            Кодирование произвольных байтов
+            </summary>
+            <param name="buff">Буфер кодируемых данных</param>
+            <param name="key">Ключ (пароль)</param>
+            <returns>Возвращаемые данные</returns>
+        </member>
+        <member name="M:INav.Cripto.DecodeBytes(System.Byte[],System.String)">
+            <summary>
+            Раскодирование произвольных данных
+            </summary>
+            <param name="buff">Раскодируемые данные</param>
+            <param name="key">Ключ (пароль)</param>
+            <returns>Результат раскодирования</returns>
+        </member>
+        <member name="M:INav.Cripto.CodeStringToBytes(System.String,System.String)">
+            <summary>
+            Кодирование строки в бинарные данные
+            </summary>
+            <param name="s">исходная строка</param>
+            <param name="key">ключ (парлоль)</param>
+            <returns>возвращаемые данные</returns>
+        </member>
+        <member name="M:INav.Cripto.DecodebytesToString(System.Byte[],System.String)">
+            <summary>
+            Раскодирование байт в строку
+            </summary>
+            <param name="buff">входной бинарный буфер</param>
+            <param name="key">ключ (пароль)</param>
+            <returns>возвращаемая строка</returns>
+        </member>
+        <member name="T:INav.CriptHashtabel">
+            <summary>
+            Работа с сохраненным защифрованным словарем
+            1. Класс НЕ ПРЕДНАЗНАЧЕН для большого количества значений
+            (нет оптимизации по памяти и скорости выполнения)
+            2. Запрещается использовать ";" и "="
+            </summary>
+        </member>
+        <member name="M:INav.CriptHashtabel.#ctor(System.String,System.String)">
+            <summary>
+            Открытие хеш-таблицы из защифрованного файла
+            </summary>
+            <param name="fn">имя файла</param>
+            <param name="key">ключ (пароль)</param>
+            <returns>Создает словарь</returns>
+        </member>
+        <member name="M:INav.CriptHashtabel.Load(System.String,System.String)">
+            <summary>
+            Загрузить из файла
+            </summary>
+            <param name="fn">Имя файла</param>
+            <param name="key">Ключ (пароль)</param>
+        </member>
+        <member name="M:INav.CriptHashtabel.#ctor(System.Collections.Hashtable)">
+            <summary>
+            Созать из готового словаря, например для сохранения
+            </summary>
+            <param name="HT">Словарь</param>
+        </member>
+        <member name="M:INav.CriptHashtabel.Save(System.String,System.String)">
+            <summary>
+            Сохранить в файл с шифрованием
+            </summary>
+            <param name="fn">Имя файла</param>
+            <param name="key">Ключ (пароль)</param>
+        </member>
+        <member name="M:INav.CriptHashtabel.Value(System.String,System.Object)">
+            <summary>
+            Получить значение по идентификатору
+            </summary>
+            <param name="id">Строковый идентификатор</param>
+            <param name="def">Значение по умолчанию
+            В случаи, если не будет ничего найдено по идентификатору, 
+            то результатом этот объект</param>
+            <returns>Возвращает искомый объект</returns>
+        </member>
+        <member name="T:INav.CHT">
+            <summary>
+            Статический, Шифрованная крипто таблица
+            </summary>
+        </member>
+        <member name="T:INav.CryptoXml">
+             <summary>
+                 /// Mithilfe dieser Generischen Klasse ist es Möglich, ein Object auf einen Datenträger verschlüsselt zu Serialisieren und 
+             natürlich auch wieder entschlüsselt zu Deserialisieren.
+             
+                 ToolSet.Crypto.GenericCryptoClass gcc = new ToolSet.Crypto.GenericCryptoClass();
+            
+                 gcc.CryptoSerialize DataSet>(@"d:\ttest.bin", (DataSet)dataGridView1.DataSource);
+                 dataGridView2.DataSource = gcc.CryptoDeSerialize{DataSet>(@"d:\ttest.bin");
+                 dataGridView2.DataMember = "table";
+             </summary>
+        </member>
+        <member name="F:INav.CryptoXml.DEFAULTKEY">
+            <summary>
+            Ein Default Key, dieser wird immer benutzt falls keiner angegeben wird.
+            </summary>
+        </member>
+        <member name="F:INav.CryptoXml.DEFAULTIV">
+            <summary>
+            Ein Default initialisierungsvektor,dieser wird immer benutzt falls keiner angegeben wird.
+            </summary>
+        </member>
+        <member name="M:INav.CryptoXml.CryptoSerialize``1(System.String,``0)">
+            <summary>
+            Erzeugt eine verschluesselts, Serialisiertes Abbild der jeweiligen Klassen auf einem Datenträger
+            </summary>
+            <typeparam name="T">Der Typ, Serialisiert werden soll</typeparam>
+            <param name="path">Der Pfad, an dem das Serialisierte abbild erezugt werden soll</param>
+            <param name="toSerialize">Das Object, das Serialisiert werden soll</param>
+        </member>
+        <member name="M:INav.CryptoXml.CryptoSerialize``1(System.String,``0,System.String)">
+            <summary>
+            Erzeugt eine verschluesselts, Serialisiertes Abbild der jeweiligen Klassen auf einem Datenträger
+            </summary>
+            <typeparam name="T">Der Typ, Serialisiert werden soll</typeparam>
+            <param name="path">Der Pfad, an dem das Serialisierte abbild erezugt werden soll</param>
+            <param name="toSerialize">Das Object, das Serialisiert werden soll</param>
+            <param name="key">Der Schlüssel, mit dem das Abbild verschlüsselt werden soll</param>
+        </member>
+        <member name="M:INav.CryptoXml.CryptoSerialize``1(System.String,``0,System.String,System.String)">
+            <summary>
+            Erzeugt eine verschluesselts, Serialisiertes Abbild der jeweiligen Klassen auf einem Datenträger
+            </summary>
+            <typeparam name="T">Der Typ, Serialisiert werden soll</typeparam>
+            <param name="path">Der Pfad, an dem das Serialisierte abbild erezugt werden soll</param>
+            <param name="toSerialize">Das Object, das Serialisiert werden soll</param>
+            <param name="key">Der Schlüssel, mit dem das Abbild verschlüsselt werden soll</param>
+            <param name="iv">Der Initialisierungsverktor, für die Initialisierung der Verschlüsselung</param>
+        </member>
+        <member name="M:INav.CryptoXml.CryptoDeSerialize``1(System.String)">
+            <summary>
+            Deserialisiert ein verschlüsseltes, serialisiertes Abbild einer Klasse von einem Datenträger
+            </summary>
+            <typeparam name="T">Der Typ, Serialisiert werden soll</typeparam>
+            <param name="path">Der Pfad, an dem das Serialisierte abbild erezugt werden soll</param>
+            <returns>Das Deserialisiert Object</returns>
+        </member>
+        <member name="M:INav.CryptoXml.CryptoDeSerialize``1(System.String,System.String)">
+            <summary>
+            Deserialisiert ein verschlüsseltes, serialisiertes Abbild einer Klasse von einem Datenträger
+            </summary>
+            <typeparam name="T">Der Typ, Serialisiert werden soll</typeparam>
+            <param name="path">Der Pfad, an dem das Serialisierte abbild erezugt werden soll</param>
+            <param name="key">Der Schlüssel, mit dem das Abbild verschlüsselt werden soll</param>
+            <returns>Das Deserialisiert Object</returns>
+        </member>
+        <member name="M:INav.CryptoXml.CryptoDeSerialize``1(System.String,System.String,System.String)">
+            <summary>
+            Deserialisiert ein verschlüsseltes, serialisiertes Abbild einer Klasse von einem Datenträger
+            </summary>
+            <typeparam name="T">Der Typ, Serialisiert werden soll</typeparam>
+            <param name="path">Der Pfad, an dem das Serialisierte abbild erezugt werden soll</param>
+            <param name="key">Der Schlüssel, mit dem das Abbild verschlüsselt werden soll</param>
+            <param name="iv">Der Initialisierungsverktor, für die Initialisierung der Verschlüsselung</param>
+            <returns>Das Deserialisiert Object</returns>
+        </member>
+        <member name="M:INav.CryptoXml.CryptoTransformer(System.String,System.String)">
+            <summary>
+            Erzeugt einen einfachen Rijndael CryptoTransformer
+            </summary>
+            <param name="key">Der Schlüssel, mit dem das Abbild verschlüsselt werden soll</param>
+            <param name="iv">Der Initialisierungsverktor, für die Initialisierung der Verschlüsselung</param>
+            <returns>Ein Rijndael CryptoTransformer</returns>
+        </member>
+        <member name="M:INav.CryptoXml.GetPaddedString(System.String)">
+            <summary>
+            Diese Methode, verstärkt noch ein wenig die Verschlüsselung.
+            </summary>
+            <param name="val">ein Wert der gepaddet werden soll</param>
+            <returns>ein gepaddeter String</returns>
+        </member>
+        <member name="T:INav.TaskDefault">
+            <summary>
+             Абстрактное задание наследуя которое удобно создавать свои задания
+            </summary>
+        </member>
+        <member name="T:INav.IErrorTask">
+            <summary>
+            Интерфейс заданий, которые позволяют описывать свои ошибки
+            </summary>
+        </member>
+        <member name="P:INav.IErrorTask.ErrorDescription">
+            <summary>
+            Описание ошибки
+            </summary>
+        </member>
+        <member name="M:INav.TaskDefault.GetClone">
+            <summary>
+             Вернуть клон
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.ToString">
+            <summary>
+            Отображение
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.BeginEdit(System.Windows.Forms.Panel)">
+            <summary>
+            Редактирование
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:INav.TaskDefault.EndEdit">
+            <summary>
+            Обратное редактирование
+            </summary>
+        </member>
+        <member name="M:INav.TaskDefault.DataExport">
+            <summary>
+            Экспортирование
+            </summary>
+        </member>
+        <member name="M:INav.TaskDefault.DataImport">
+            <summary>
+            Импортирование
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.KeyDown(System.Windows.Forms.Keys)">
+            <summary>
+            Отработка кнопок
+            </summary>
+            <param name="keyCode"></param>
+        </member>
+        <member name="M:INav.TaskDefault.Create(System.String)">
+            <summary>
+            Инициализация - чтение из строки - vjдля совместимости нужно пергружать
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:INav.TaskDefault.Read(System.String)">
+            <summary>
+            Чтение строки
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.SaveString">
+            <summary>
+            Строка с сохраненными данными, можно перегружать лдя совместимости
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.Save">
+            <summary>
+            Сохранение в строку
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.View">
+            <summary>
+            Отображение в редакторе
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.Report(INav.TaskReportInformation)">
+            <summary>
+            В отчет - часто нужно перегружать, т.к.
+            по умолчанию записывает описание
+            </summary>
+            <param name="info"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.Execute(INav.ITaskList)">
+            <summary>
+            Выполнение
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.TaskDefault.UserExecute">
+            <summary>
+            Выполняемо пользователем
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.IndexInList">
+            <summary>
+            Нужно просто поле
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.IsBreakpoint">
+            <summary>
+            Нужно просто поле
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.State">
+            <summary>
+            Нужно просто поле
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.Tag">
+            <summary>
+             Тег, на всякий случай
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.FontColor">
+            <summary>
+             Цвет шрифта
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.Font">
+            <summary>
+             Шрифт отображения
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.WaitAfter">
+            <summary>
+             Ожидание после выполнения задания
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.Wait">
+            <summary>
+             Сериализуемый WaitAfter
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.Posible">
+            <summary>
+            Разрешена работа всегда
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.Nav">
+            <summary>
+            Ссылка на Навигатор
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.Name">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="P:INav.TaskDefault.HelpFile">
+            <summary>
+            Справка
+            </summary>
+        </member>
+        <member name="T:INav.IWpfTask">
+            <summary>
+            WPF интерфейс задания
+            </summary>
+        </member>
+        <member name="P:INav.IWpfTask.DataTemplate">
+            <summary>
+            Шаблон 
+            </summary>
+        </member>
+        <member name="T:INav.IXmlReportTask">
+            <summary>
+            Задание умеет документирвоать с разметкой
+            </summary>
+        </member>
+        <member name="M:INav.IXmlReportTask.XmlReport(INav.TaskReportInformation)">
+            <summary>
+            Строка отчета
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:INav.Profil">
+            <summary>
+            Описание оодного профиля
+            </summary>
+        </member>
+        <member name="M:INav.Profil.ToString">
+            <summary>
+            В строку для отображения
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Profil.Clone">
+            <summary>
+            Вернуть клона
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.Profil.Text">
+            <summary>
+            Имя профиля
+            </summary>
+        </member>
+        <member name="P:INav.Profil.Frec">
+            <summary>
+            Центральная частота канала связи
+            </summary>
+        </member>
+        <member name="P:INav.Profil.FrecStr">
+            <summary>
+            Частота строкой
+            </summary>
+        </member>
+        <member name="P:INav.Profil.BaundRate">
+            <summary>
+            Битрейт 
+            </summary>
+        </member>
+        <member name="P:INav.Profil.Modulation">
+            <summary>
+            Модуляция 
+            </summary>
+        </member>
+        <member name="P:INav.Profil.Dopler">
+            <summary>
+            Учитывать доплер
+            </summary>
+        </member>
+        <member name="P:INav.Profil.LowChannalCode">
+            <summary>
+            Киодирование низкоскоростного канала
+            </summary>
+        </member>
+        <member name="P:INav.Profil.IsEmpty">
+            <summary>
+            Пустой
+            </summary>
+        </member>
+        <member name="T:INav.Profil.ModulationType">
+            <summary>
+            Модулящция (и для модема и для трансивера)
+            </summary>
+        </member>
+        <member name="T:INav.LowChannalCode">
+            <summary>
+            Киодирование низкоскоростного канала
+            </summary>
+        </member>
+        <member name="T:INav.ModemModulation">
+            <summary>
+            Модуляция
+            </summary>
+        </member>
+        <member name="T:INav.ModemBaundRate">
+            <summary>
+            Частоты работы модема
+            </summary>
+        </member>
+        <member name="F:QvForms.QvMessage.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:QvForms.QvMessage.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:QvForms.QvMessage.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:INav.Properties.Resources">
+            <summary>
+              Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
+            </summary>
+        </member>
+        <member name="P:INav.Properties.Resources.ResourceManager">
+            <summary>
+              Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+            </summary>
+        </member>
+        <member name="P:INav.Properties.Resources.Culture">
+            <summary>
+              Перезаписывает свойство CurrentUICulture текущего потока для всех
+              обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
+            </summary>
+        </member>
+        <member name="P:BaseKpa.CanBidIdentiferBase.SIDC">
+            <summary>
+            Идентификатор команды
+            </summary>
+        </member>
+        <member name="P:BaseKpa.CanBidIdentiferBase.IdMask">
+            <summary>
+            Маска для идентияикаторов
+            </summary>
+        </member>
+        <member name="P:BaseKpa.CanBidIdentiferBase.EIDC">
+            <summary>
+            Идентификатор команды
+            </summary>
+        </member>
+        <member name="P:BaseKpa.CanBidIdentiferBase.Commsnd">
+            <summary>
+            Сама команда
+            </summary>
+        </member>
+        <member name="P:BaseKpa.CanBidIdentiferBase.Enable">
+            <summary>
+            Использовать
+            </summary>
+        </member>
+        <member name="T:INav.SerializableFont">
+            <summary />
+        </member>
+        <member name="P:INav.SerializableFont.Font">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Commands.EditCommListOptionsForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Commands.EditCommListOptionsForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Commands.EditCommListOptionsForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:INav.TaskFormDefault.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:INav.TaskFormDefault.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:INav.TaskFormDefault.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:INav.TaskEditor">
+            <summary>
+            Список редакторов
+            </summary>
+        </member>
+        <member name="F:INav.TaskEditor.Forms">
+            <summary>
+            Список форм - редакторов по имени их класса
+            </summary>
+        </member>
+        <member name="T:Commands.Command">
+            <summary>
+            Команда для передачи
+            </summary>
+        </member>
+        <member name="M:Commands.Command.SaveString">
+            <summary>
+            Строка для стандартного сохранения. Совместима с методом Parse
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Commands.Command.XmlView">
+            <summary>
+            Строка отображения с форматирваонием
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Commands.Command.ViewString">
+            <summary>
+            Отображение команды строкой
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Commands.Command.Parse(System.String,System.Boolean)">
+            <summary>
+            Открыватес команду (все варианты) из строки
+            </summary>
+            <param name="s"></param>
+            <param name="ensureExist">Требует существование с перечне команд</param>
+            <returns></returns>
+        </member>
+        <member name="P:Commands.Command.Id">
+            <summary>
+            Идентификатор команды
+            Это жет быть номер комнды или буквенное обозначение "КАН", "КПИ" и т.д.
+            </summary>
+        </member>
+        <member name="P:Commands.Command.Time">
+            <summary>
+            Время выполненеия для временных команд или null
+            
+            Витковое время предлагаю хранить все-равно в "нормальном" виде, выполня прямое и обратное 
+              преобразование.  Такое преобразвание существует для 4-байтного времени БЦК. Только тут
+              надо заботиться о корректности навигационных данных или точках восходящего угла
+            </summary>
+        </member>
+        <member name="P:Commands.Command.Param">
+            <summary>
+            Массив параметров или null
+            </summary>
+        </member>
+        <member name="P:Commands.Command.IsNumeric">
+            <summary>
+            Номер команды, если он номерной
+            </summary>
+        </member>
+        <member name="P:Commands.EditCommListOptions.CommListOverTime">
+            <summary>
+            Отображать как ошибку команды старше одного месяца в списке команд
+            </summary>
+        </member>
+        <member name="M:INav.ITimeService.RequstForUpdate">
+            <summary>
+            Запрос на обнолвление параметров
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.Distance">
+            <summary>
+            Расстояние до КА в км
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.DoplerCoefficient">
+            <summary>
+            Коэффициент поправки частоты на основании эффекта Доплера
+            Положительная скорость означает сближение, коэффициент больше единицы
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.SsbModulation">
+            <summary>
+            Сейчас модуляция SSB
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.GccEci">
+            <summary>
+            Коэффициент поправки частоты на основании эффекта Доплера
+            Положительная скорость означает сближение, коэффициент больше единицы
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.LookAngel">
+            <summary>
+            Положение антен  для текущего авктивного спутника
+            Внимание! широта и долгота в радианах
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.NowIsPass">
+            <summary>
+            Признак, что сейчас сеанс
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.Revision">
+            <summary>
+            Виток на орбите для текущего авктивного спутника
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.SatEci">
+            <summary>
+            Положение и скорость КА в системе координат ECI
+            Для определения подспутниковой точки необходимо 
+            eci.toGeo().Latitude, eci.toGeo().Longitude, eci.toGeo().Altitude
+            Внимание! широта и долгота в радианах
+            </summary>
+        </member>
+        <member name="E:INav.ITimeService.ValuesUpdated">
+            <summary>
+            Событие, возникащее после обновления навигационных и других данных службы времени
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.ActivePass">
+            <summary>
+            Активный сеанс
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.AntenControl">
+            <summary>
+            Разрешить управление антенами
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.FrequencyControl">
+            <summary>
+            Разрешить управление частотами
+            </summary>
+        </member>
+        <member name="P:INav.ITimeService.DoplerControl">
+            <summary>
+            Разрешить управление частотами
+            </summary>
+        </member>
+        <member name="E:INav.ITimeService.StartPass">
+            <summary>
+            Соытия начала сеанса
+            </summary>
+        </member>
+        <member name="E:INav.ITimeService.FinishPass">
+            <summary>
+            Событие завершения сеанса
+            </summary>
+        </member>
+        <member name="T:INav.TaskState">
+            <summary>
+            Состяоне задания. 
+            </summary>
+        </member>
+        <member name="T:INav.ITask">
+            <summary>
+            Интерфейс задания
+            Все задания должны реализовывать этот интерфейс
+            
+            После созадния передается ссылка INav
+            и проверяется свойстро Possible
+            
+            Все внутренние данные, относящиеся к заданию должны быть 
+            свойствами, т.к. используется мотод MemborizeClose();
+            </summary>
+        </member>
+        <member name="M:INav.ITask.ToString">
+            <summary>
+            В строку для отображения типа задания (при выборе)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITask.BeginEdit(System.Windows.Forms.Panel)">
+            <summary>
+            Начало редактрирования - подготовить редактор
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:INav.ITask.EndEdit">
+            <summary>
+            Конец редактирования - убрать редактор
+            </summary>
+        </member>
+        <member name="M:INav.ITask.DataExport">
+            <summary>
+            Данные в редактор
+            </summary>
+        </member>
+        <member name="M:INav.ITask.DataImport">
+            <summary>
+            Данные из редактора
+            </summary>
+            <returns>удачность чтения</returns>
+        </member>
+        <member name="M:INav.ITask.KeyDown(System.Windows.Forms.Keys)">
+            <summary>
+            Нажитие клавиш при редактировани
+            </summary>
+            <param name="KeyCode"></param>
+        </member>
+        <member name="M:INav.ITask.Read(System.String)">
+            <summary>
+            Читать строку
+            Если не читается - возвращает null
+            Значенеи Nav может быть присвоено или нет. Каждый отдельный случай нужно рассматривать отдельно. 
+            Дело в том, что AfterInit, а следовательно и ViewInit происходит при первом присвоении Nav
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITask.Save">
+            <summary>
+            Сохраняет задание в строку
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITask.View">
+            <summary>
+            Строка для отображения в редакторе
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITask.Report(INav.TaskReportInformation)">
+            <summary>
+            Строка в отчет для создания документации испытаний
+            </summary>
+            <param name="info">Пааметры отчета</param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITask.Execute(INav.ITaskList)">
+            <summary>
+            Метод выполнения задания
+            </summary>
+            <returns>Если false - то это авария - останавливается выполение</returns>
+        </member>
+        <member name="M:INav.ITask.UserExecute">
+            <summary>
+            Выполнить по инициативе пользователя, т.е. задавать вопросы и т.д.
+            </summary>
+        </member>
+        <member name="P:INav.ITask.IsBreakpoint">
+            <summary>
+            Нужно просто поле
+            </summary>
+        </member>
+        <member name="P:INav.ITask.State">
+            <summary>
+            Нужно просто поле
+            </summary>
+        </member>
+        <member name="P:INav.ITask.IndexInList">
+            <summary>
+            Нужно просто поле
+            </summary>
+        </member>
+        <member name="P:INav.ITask.Posible">
+            <summary>
+            Разршен ла этот плагин в такой конфигурации Nav
+            Например, режим КПА или имя спутника
+            </summary>
+        </member>
+        <member name="P:INav.ITask.Nav">
+            <summary>
+            После создания плагина, ему передается ссылка на приложение Навигатора
+            Приложение Навигатора реализует интерфес INav
+            Во время присвоения ссылки НЕ должна быть произведена инициализация
+            </summary>
+        </member>
+        <member name="P:INav.ITask.Name">
+            <summary>
+            Имя задания
+            </summary>
+        </member>
+        <member name="P:INav.ITask.Description">
+            <summary>
+            Описание задания
+            </summary>
+        </member>
+        <member name="P:INav.ITask.HelpFile">
+            <summary>
+            Файл справки
+            </summary>
+        </member>
+        <member name="P:INav.ITask.FontColor">
+            <summary>
+            Цвет отображения в списке
+            </summary>
+        </member>
+        <member name="P:INav.ITask.Font">
+            <summary>
+            Цвет, если по умолчанию, то null
+            </summary>
+        </member>
+        <member name="T:INav.INav5Task">
+            <summary>
+            Укащывает на придлежность задания к Nav5
+            </summary>
+        </member>
+        <member name="M:Commands.Ncl7to6.Convertor.ConvertNcl6to7(System.String,System.String)">
+            <summary>
+            Загрузка данных
+            </summary>
+        </member>
+        <member name="M:Commands.Ncl7to6.Convertor.SaveToNcl6(Commands.NclDataClass,System.String,System.String)">
+            <summary>
+            Сохраняет  в файл формта NCL6 (обратная совместимость)
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="T:Commands.Ncl7to6.Command">
+            <summary>
+            Простая команда
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Command.Number">
+            <summary>
+            Номер команд
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Command.Name">
+            <summary>
+            Имя команды
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Command.Asknowlage">
+            <summary>
+            Подтверждение
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Command.Cancel">
+            <summary>
+            Отмена действия
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Command.Hint">
+            <summary>
+            Подсказака, описание
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Command.Note">
+            <summary>
+            Примечание
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Command.Access">
+            <summary>
+            Особенности доступа
+            </summary>
+        </member>
+        <member name="T:Commands.Ncl7to6.CommandGroup">
+            <summary>
+            Группа команд
+            </summary>
+        </member>
+        <member name="F:Commands.Ncl7to6.CommandGroup.Include">
+            <summary>
+            Массив его команд
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.CommandGroup.Name">
+            <summary>
+            Имя группы
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.CommandGroup.serInclude">
+            <summary>
+            Сериализуемое содержимое
+            </summary>
+        </member>
+        <member name="T:Commands.Ncl7to6.Comm">
+            <summary>
+            Описане только номера команды, структура
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.Comm.Number">
+            <summary>
+            Номер команды
+            </summary>
+        </member>
+        <member name="T:Commands.Ncl7to6.ComandsInfo">
+            <summary>
+            Информация о командах
+            </summary>
+        </member>
+        <member name="F:Commands.Ncl7to6.ComandsInfo.Commands">
+            <summary>
+            Сами команды
+            </summary>
+        </member>
+        <member name="F:Commands.Ncl7to6.ComandsInfo.Groups">
+            <summary>
+            Группы
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.ComandsInfo.serCommands">
+            <summary>
+            Сериализуемое содержимое
+            </summary>
+        </member>
+        <member name="P:Commands.Ncl7to6.ComandsInfo.serGroups">
+            <summary>
+            Сериализуемые группы
+            </summary>
+        </member>
+        <member name="T:INav.Commands.CommTime">
+            <summary>
+            Вермя, передаваемое в командах
+            </summary>
+        </member>
+        <member name="M:INav.Commands.CommTime.CompareTo(System.Object)">
+            <summary>
+            Сралвение
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Commands.CommTime.#ctor(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="day"></param>
+            <param name="hour"></param>
+            <param name="minute"></param>
+            <param name="second"></param>
+        </member>
+        <member name="M:INav.Commands.CommTime.#ctor(System.DateTime)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="time"></param>
+        </member>
+        <member name="M:INav.Commands.CommTime.ToString">
+            <summary>
+            В строку формата "09/20-06-24"
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Commands.CommTime.#ctor(System.String)">
+            <summary>
+            Преобразование из строки формата "09/20-06-24"
+            </summary>
+            <param name="s"></param>
+        </member>
+        <member name="M:INav.Commands.CommTime.ToDateTime">
+            <summary>
+            В нормальное время, на основе текущего
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.Commands.CommTime.Day">
+            <summary>
+            День
+            </summary>
+        </member>
+        <member name="P:INav.Commands.CommTime.Hour">
+            <summary>
+            Час
+            </summary>
+        </member>
+        <member name="P:INav.Commands.CommTime.Minute">
+            <summary>
+            Минута
+            </summary>
+        </member>
+        <member name="P:INav.Commands.CommTime.Second">
+            <summary>
+            Секунда
+            </summary>
+        </member>
+        <member name="T:Commands.SelectStartTime">
+            <summary>
+            Логика взаимодействия для SelectStartTime.xaml
+            </summary>
+        </member>
+        <member name="M:Commands.SelectStartTime.StartTime(System.TimeSpan)">
+            <summary>
+            Сдвигает весь список на dt
+            </summary>
+            <param name="dt"></param>
+        </member>
+        <member name="M:Commands.SelectStartTime.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:INav.TmViewType">
+            <summary>
+            Тип отображения телеметрического параметра
+            </summary>
+        </member>
+        <member name="M:INav.ITaskParamCompare.Check">
+            <summary>
+            Производит нужные сравнения и возвращает сообщение об ошике или пустую строку (или null) в случае успеха
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:INav.FormWait">
+            <summary>
+            Окно с надписью подождать
+            </summary>
+        </member>
+        <member name="M:INav.FormWait.#ctor(System.String)">
+            <summary>
+            Форма ожидания окончания выполнения процесса
+            </summary>
+            <param name="Desc">писание выполняемой операции</param>
+        </member>
+        <member name="M:INav.FormWait.SetPosition(System.Int32)">
+            <summary>
+            Установить знанчеие прогресса
+            </summary>
+            <param name="Value"></param>
+        </member>
+        <member name="M:INav.FormWait.ShowWait">
+            <summary>
+            Показать окошко
+            </summary>
+        </member>
+        <member name="M:INav.FormWait.CloseWait">
+            <summary>
+            Закрыть окошко
+            </summary>
+        </member>
+        <member name="F:INav.FormWait.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:INav.FormWait.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:INav.FormWait.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:INav.FormWait.lbCapt">
+            <summary>
+            Строка заголовка
+            </summary>
+        </member>
+        <member name="F:INav.FormWait.ProgressBar">
+            <summary>
+            Индикатор прогресса
+            </summary>
+        </member>
+        <member name="T:Commands.CaseCommandWindow">
+            <summary>
+            Логика взаимодействия для CaseCommandWindow.xaml
+            </summary>
+            <summary>
+            CaseCommandWindow
+            </summary>
+        </member>
+        <member name="M:Commands.CaseCommandWindow.CaseRK(Commands.Command,System.Boolean,System.Boolean,System.Object)">
+            <summary>
+            Редактирвоание команд
+            </summary>
+            <param name="comm">редакироуемая команда</param>
+            <param name="allowVkRk">Разрешить пользователю выбирать временная это команда или нет</param>
+            <param name="defVk">Если ИСТИНА, то по умолчанию команда временная</param>
+            <returns>Выбранная польователем команда, либо null</returns>
+        </member>
+        <member name="F:Commands.CaseCommandWindow.HoldAfterSelect">
+            <summary>
+            Не закрывать окошко, полсе выбора команды - дать возможность выбрать следующую команду
+            </summary>
+        </member>
+        <member name="M:Commands.CaseCommandWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:INav.TmEditor">
+            <summary>
+            В Навигаторе есть возможсноть созадавать собственные обработчики ТМ,
+            кторые могут нуждатьс в специфичных средствах подготовки ТМ
+            Одним из из таких стандартных средтв является TMB.exe
+            Однако, есть возможность напсать свой собственный
+            Для каждого "файла" создается отдельный класс.
+            Польователь может редактировать одновременно несколько телеметрических 
+            файлов в разных редакторах
+            
+            Класс от которого надо наследовать, который должен реализовывать редактор телеметрии
+            Этот класс полностью загружается в редактор свойств
+            Этот класс полностью сериализуется в настройки
+            </summary>
+        </member>
+        <member name="M:INav.TmEditor.Edit">
+            <summary>
+            Запускается при желании пользователя редактировать файл
+            </summary>
+        </member>
+        <member name="M:INav.TmEditor.ToString">
+            <summary>
+            Отображается пользователю как название в списке
+            Должен быть перезагружен
+            Рекомендуется выводить имя редактируемого файла
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.TmEditor.Nav">
+            <summary>
+            После созадиня класса, сюда передается ссылка на Навигатор
+            Редактор ТМ может использовать функции выгузки спутника, 
+            замены соотвествующих файлов и загрузки путника
+            </summary>
+        </member>
+        <member name="P:INav.TmEditor.Description">
+            <summary>
+            Опиание редактора (отображается пользователю)
+            как подсказка в списке
+            </summary>
+        </member>
+        <member name="P:INav.TmEditor.Icon16">
+            <summary>
+            Иконка для отображения
+            </summary>
+        </member>
+        <member name="T:INav.ITaskManedged">
+            <summary>
+            Управение списками заданий
+            </summary>
+        </member>
+        <member name="M:INav.ITaskManedged.ParseTask(System.String)">
+            <summary>
+            Распознат задание
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskManedged.IncErrorCount(System.String)">
+            <summary>
+            Увеличиваем количество ошибок с причиной
+            </summary>
+            <param name="fn"></param>
+        </member>
+        <member name="M:INav.ITaskManedged.IncErrorCount">
+            <summary>
+            Просто увеличить счетччик ошибок
+            </summary>
+        </member>
+        <member name="M:INav.ITaskManedged.ExecuteString(System.String)">
+            <summary>
+            Выполнить строку задания
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskManedged.CaseTask">
+            <summary>
+            Выбрать задание
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskManedged.Add(System.String,System.Boolean)">
+            <summary>
+            Добавить
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskManedged.Add(System.String)">
+            <summary>
+            Добавить
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskManedged.LoadNonExecutive(System.String)">
+            <summary>
+            Загрузить список не для выполнения
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.ITaskManedged.Close(INav.ITaskList)">
+            <summary>
+            Закрыть
+            </summary>
+            <param name="taskList"></param>
+            <returns>Истина</returns>
+        </member>
+        <member name="P:INav.ITaskManedged.Items">
+            <summary>
+            Списки заданий
+            </summary>
+        </member>
+        <member name="P:INav.ITaskManedged.GlobalVariables">
+            <summary>
+            Глобальные переменные для обмена данными из разный заданий
+            </summary>
+        </member>
+        <member name="P:INav.ITaskManedged.SharedObject">
+            <summary>
+            Объект для обмена между заданиями
+            </summary>
+        </member>
+        <member name="P:INav.ITaskManedged.RegistedTasks">
+            <summary>
+            Экземпляры пустых найденных заданий
+            </summary>
+        </member>
+        <member name="P:INav.ITaskManedged.ErrorCount">
+            <summary>
+            Счетчик ошибок - обнуление через задание
+            </summary>
+        </member>
+        <member name="P:INav.ITaskManedged.LastErrorMessage">
+            <summary>
+            Полседнне сообщение об ошибке
+            </summary>
+        </member>
+        <member name="T:INav.SatRunReason">
+            <summary>
+            Причина загрузки спутинка
+            </summary>
+        </member>
+        <member name="F:INav.SatRunReason.ProgramRun">
+            <summary>
+            Запуск программы
+            </summary>
+        </member>
+        <member name="F:INav.SatRunReason.SatChange">
+            <summary>
+            Переключение спутника
+            </summary>
+        </member>
+        <member name="T:INav.SatCloseReason">
+            <summary>
+            Причина выгрузки спутинка
+            </summary>
+        </member>
+        <member name="F:INav.SatCloseReason.ExifProgram">
+            <summary>
+            Запуск программы
+            </summary>
+        </member>
+        <member name="F:INav.SatCloseReason.SatChange">
+            <summary>
+            Переключение спутника
+            </summary>
+        </member>
+        <member name="T:INav.FileWasSaveArgs">
+            <summary>
+            Аргумент события о сохранении файла
+            </summary>
+        </member>
+        <member name="P:INav.FileWasSaveArgs.FileName">
+            <summary>
+            Имя файла
+            </summary>
+        </member>
+        <member name="P:INav.FileWasSaveArgs.Comment">
+            <summary>
+            Коментарии
+            </summary>
+        </member>
+        <member name="P:INav.FileWasSaveArgs.Host">
+            <summary>
+            Кто сохранил
+            </summary>
+        </member>
+        <member name="T:INav.INav">
+            <summary>
+            Интерфейс приложения Навигатора
+            Передается всем заданиям и плагинам
+            Делается как потокобезопасный!
+            </summary>
+        </member>
+        <member name="M:INav.INav.ShowSendCommand(Commands.Command)">
+            <summary>
+            Показать окно передачи команды
+            </summary>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:INav.INav.OnGlobalEvent(System.String,System.String)">
+            <summary>
+            Вызов GlobalEvent
+            </summary>
+            <param name="type"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:INav.INav.OnGlobalEvent(System.String,System.String,System.Object)">
+            <summary>
+            Вызов GlobalEvent
+            </summary>
+            <param name="type"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:INav.INav.GenerateEventOnSaveTm(System.String)">
+            <summary>
+            Генерация события OnSaveTm
+            </summary>
+            <param name="tm"></param>
+        </member>
+        <member name="M:INav.INav.GenerateAddTmString(System.String,System.Byte[],System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Генерация события OnAddTmString
+            </summary>
+            <param name="tm"></param>
+            <param name="data"></param>
+            <param name="real"></param>
+            <param name="pointer"></param>
+            <param name="sec"></param>
+        </member>
+        <member name="M:INav.INav.ShowRealFrecOnMainForm(System.UInt32,System.UInt32)">
+            <summary>
+            Отобразить на главной форме реальные частоты
+            </summary>
+            <param name="rx"></param>
+            <param name="tx"></param>
+        </member>
+        <member name="M:INav.INav.RefreshPluginOptions(System.String)">
+            <summary>
+            Перерисовать настройки плагинов (они изменились самой программой)
+            </summary>
+        </member>
+        <member name="M:INav.INav.SendCancelTimeComm(System.DateTime)">
+            <summary>
+            Отменить команду на заданное время
+            </summary>
+            <param name="time"></param>
+        </member>
+        <member name="M:INav.INav.HostoryUpdate(System.String)">
+            <summary>
+            Обновить история команд на грлавном окне
+            </summary>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:INav.INav.RefreshDataSendForm">
+            <summary>
+            Перерисовать окно загрузки данных (если открыто)
+            </summary>
+        </member>
+        <member name="M:INav.INav.AddNoiseValue(System.Double)">
+            <summary>
+            Добавить данные об уровне шума
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:INav.INav.AddNoiseEmpty">
+            <summary>
+            Добавить данные отсутствия данных
+            </summary>
+        </member>
+        <member name="M:INav.INav.InformFileWasSave(INav.FileWasSaveArgs)">
+            <summary>
+            Информирование Навигатора о том, что был сохранен некий файл
+            </summary>
+        </member>
+        <member name="M:INav.INav.ChangeSat(System.String,INav.Procedure)">
+            <summary>
+            Переключить спутник, 
+            в фоне, не показывая пользователю
+            Выполить дейсвтие после выгрузки и перед загрузкой
+            </summary>
+            <param name="satName"></param>
+            <param name="action"></param>
+        </member>
+        <member name="M:INav.INav.ChangeSat(System.String)">
+            <summary>
+            Переключить спутник, 
+            не в фоне
+            Обычное переключение спутинка
+            </summary>
+            <param name="satName"></param>
+        </member>
+        <member name="M:INav.INav.ShowText(System.String,INav.MessageType)">
+            <summary>
+            Показать сообщение  ( с записью в протокол)
+            Может быть разных типов
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:INav.INav.ShowText(System.String,INav.MessageType,INav.MessageButtons)">
+            <summary>
+            Показать сообщение  ( с записью в протокол)
+            Может быть разных типов с кнопками
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:INav.INav.CreateWaitFrom(System.String)">
+            <summary>
+            Вернуть интефейс окошка "подождите"
+            </summary>
+            <param name="caption"></param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.INav.ShowMessage(System.String,System.String,System.Windows.Forms.ToolTipIcon)">
+            <summary>
+            Показать сообщение на форме
+            </summary>
+            <param name="title">Заголовок</param>
+            <param name="text">Текст</param>
+            <param name="icon">Иконка</param>
+        </member>
+        <member name="M:INav.INav.AddToProtocol(System.String,INav.ProtocolNote)">
+            <summary>
+            Сообщение в протокол
+            </summary>
+            <param name="text">текс ообщения</param>
+            <param name="type">тип сообщения</param>
+        </member>
+        <member name="M:INav.INav.AddToProtocol(System.String,INav.ProtocolNote,System.Boolean)">
+            <summary>
+            Сообщение в протокол
+            с возможнсотью выделить жирным первое слово
+            </summary>
+            <param name="text">текс ообщения</param>
+            <param name="type">тип сообщения</param>
+            <param name="bold">Первое слово будет выделено жирным</param>
+        </member>
+        <member name="M:INav.INav.CloseApplication">
+            <summary>
+            Закрыть приложение
+            </summary>
+        </member>
+        <member name="M:INav.INav.ShowSendRk(Commands.Command)">
+            <summary>
+            Показать окшко передачи команды
+            </summary>
+            <param name="comm"></param>
+        </member>
+        <member name="P:INav.INav.DirBin">
+            <summary>
+            Директория исполняемых файлов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirHelp">
+            <summary>
+            Директория файлов справки
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirDocs">
+            <summary>
+            Директория файлов справки
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirRoot">
+            <summary>
+            Основная директоия
+            </summary>
+        </member>
+        <member name="P:INav.INav.DirUtils">
+            <summary>
+            Директория утилит
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirTemp">
+            <summary>
+            Временная директрия
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirOutput">
+            <summary>
+            Директория выходных файлов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirReport">
+            <summary>
+            Директория сохраняемых данных
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirProtocol">
+            <summary>
+            Директория протокола
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirSat">
+            <summary>
+            Директория спутника
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirLoad">
+            <summary>
+            Директория Load
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirTaskList">
+            <summary>
+            Директория заданий
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirCommandList">
+            <summary>
+            Директория CommandList
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:INav.INav.DirSatDesign">
+            <summary>
+            Директория разработки спутника
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:INav.INav.GlobalEvent">
+            <summary>
+            Глобальное событие. Генерирует кто хочет, подписывается кто хочет
+            </summary>
+        </member>
+        <member name="E:INav.INav.OnAddToProtocol">
+            <summary>
+            Было добавлено сообщение в протокол
+            Параметры:
+                сообщение
+                тип
+                выделение первого слова
+            </summary>
+        </member>
+        <member name="E:INav.INav.OnSaveTm">
+            <summary>
+            Событие о завершении приема ТМ, сохранение ТМ
+            Параметры
+                тип тм
+            </summary>
+        </member>
+        <member name="E:INav.INav.OnAddTmString">
+            <summary>
+            Событие доблаление строки ТМ
+            Параметры
+                тип тм
+                добаляемые данные
+                достоверность данных
+                указатель положения первого байта передаваемых данных в буфере ТМ
+                номер сектора
+            </summary>
+        </member>
+        <member name="P:INav.INav.AutomathMode">
+            <summary>
+            Режим работы программы в автомате
+            </summary>
+        </member>
+        <member name="P:INav.INav.RunReason">
+            <summary>
+            Причина загруззки спутника
+            </summary>
+        </member>
+        <member name="P:INav.INav.CloseReason">
+            <summary>
+            Причина выгрузки спутника
+            </summary>
+        </member>
+        <member name="P:INav.INav.Navigation">
+            <summary>
+            Навигационная система
+            </summary>
+        </member>
+        <member name="P:INav.INav.msuTx">
+            <summary>
+            Передача МСУ
+            </summary>
+        </member>
+        <member name="P:INav.INav.msuRx">
+            <summary>
+            Прием МСУ
+            </summary>
+        </member>
+        <member name="P:INav.INav.canTx">
+            <summary>
+            Передача КАН
+            </summary>
+        </member>
+        <member name="P:INav.INav.canRx">
+            <summary>
+            Прием КАН
+            </summary>
+        </member>
+        <member name="P:INav.INav.modemIniTx">
+            <summary>
+            Gthtltxf lfyys[ yfcnhjqrb vjltvf
+            </summary>
+        </member>
+        <member name="P:INav.INav.EarthEnable">
+            <summary>
+            Управление анимаций на главном окне
+            </summary>
+        </member>
+        <member name="P:INav.INav.MainForm_InfoLabel">
+            <summary>
+            Надписи информации на главной форме
+            </summary>
+        </member>
+        <member name="P:INav.INav.MainForm_NumLabel">
+            <summary>
+            Надпись номера сектора на главной форме
+            </summary>
+        </member>
+        <member name="P:INav.INav.MainForm_VerefyLabel">
+            <summary>
+            Надпись о сравнении на главной форме
+            </summary>
+        </member>
+        <member name="P:INav.INav.MainForm_Progress">
+            <summary>
+            Показания прогресса на главной форме
+            </summary>
+        </member>
+        <member name="P:INav.INav.Lister">
+            <summary>
+            Просмоторщик
+            </summary>
+        </member>
+        <member name="E:INav.INav.FileWasSave">
+            <summary>
+            Событие, что был сохранен некий файл
+            </summary>
+        </member>
+        <member name="P:INav.INav.PluginsDir">
+            <summary>
+            Путь к плагинам
+            </summary>
+        </member>
+        <member name="P:INav.INav.Site">
+            <summary>
+            Информация НПУ
+            </summary>
+        </member>
+        <member name="P:INav.INav.IActiveSat">
+            <summary>
+            ССылка на активный спутник
+            </summary>
+        </member>
+        <member name="P:INav.INav.Cnf">
+            <summary>
+            Настройки Навигатора
+            </summary>
+        </member>
+        <member name="P:INav.INav.Plugins">
+            <summary>
+            Управление плагинами
+            </summary>
+        </member>
+        <!-- Некорректный XML-комментарий для члена "P:INav.INav.MainForm" проигнорирован -->
+        <member name="P:INav.INav.IoSystem">
+            <summary>
+            Система ввода - вывода
+            </summary>
+        </member>
+        <member name="P:INav.INav.CommPassed">
+            <summary>
+            ПРизнак прохождения команды
+            </summary>
+        </member>
+        <member name="T:INav.ProtocolNote">
+            <summary>
+            Тип записи в протокол
+            </summary>
+        </member>
+        <member name="T:INav.ISatBoot">
+            <summary>
+            Интерфейс загружаемого спутника
+            </summary>
+        </member>
+        <member name="M:INav.ISatBoot.ChangeProfil(System.Boolean,System.Boolean)">
+            <summary>
+            Обновить профиль
+            </summary>
+            <param name="rx"></param>
+            <param name="tx"></param>
+        </member>
+        <member name="M:INav.ISatBoot.CreateProtocol">
+            <summary>
+            Создать новый протокол
+            </summary>
+        </member>
+        <member name="M:INav.ISatBoot.DisposeProtocol">
+            <summary>
+            Завершить текущий протокол
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.Name">
+            <summary>
+            Имя спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.VoiceName">
+            <summary>
+            Произношение спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.SaveDir">
+            <summary>
+            директория для сохранения
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.SatDir">
+            <summary>
+            директория спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.DesignDir">
+            <summary>
+            директория спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.Color">
+            <summary>
+            Цвет
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.Cnf">
+            <summary>
+            Настройки
+            </summary>
+        </member>
+        <member name="E:INav.ISatBoot.ProfilChange">
+            <summary>
+            Смена анных в профилях - означает сем установить профили
+            Параметры - для RX и для TX
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.Commands">
+            <summary>
+            Перечень доступных команд
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.ShortName">
+            <summary>
+            Имя спутника без тирэ
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.SendCommList">
+            <summary>
+            Список временных команд
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.InfoTx">
+            <summary>
+            Данные для передачи
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.Tasks">
+            <summary>
+            Управление списками заданий
+            </summary>
+        </member>
+        <member name="P:INav.ISatBoot.Imitator">
+            <summary>
+            Режим работы имитатора
+            </summary>
+        </member>
+        <member name="T:INav.ISatIni">
+            <summary>
+            Интерфейс настроек спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.AutoChangePage">
+            <summary>
+            Автоматически передключать закладки при приеме
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ComplectInformation">
+            <summary>
+            Описание подключенного оборудования
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ComplectVerefed">
+            <summary>
+            Указывает, подтвердил ли оператор комплектацию оборудования
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.SatShiftTime">
+            <summary>
+            Сдвиг времени компьютера и борта
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ResetByte">
+            <summary>
+            Коды сброса борта
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ResetByte2">
+            <summary>
+            Коды сброса борта
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ResetByte3">
+            <summary>
+            Коды сброса борта
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ResetByte4">
+            <summary>
+            Коды сброса борта
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.Infoses">
+            <summary>
+            Типы данных
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.BootedMode">
+            <summary>
+            Режим (КПА - НКУ) в котором произошла загрузка
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.DesignEn">
+            <summary>
+            Разрешена ли разработка
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.CmdCancelVK">
+            <summary>
+            Команда отмены команды ВП
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.CancelTxCommands">
+            <summary>
+            Список команд отмены передачи
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.CmdSetTime">
+            <summary>
+            Команда установки времени
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.GmtTime">
+            <summary>
+            Загружается время по Гринвичу
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.CmdSetDate">
+            <summary>
+            Команда установки даты
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.CmdKorTimePlus">
+            <summary>
+            Команда корекции времени
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.CmdKorTimeMinus">
+            <summary>
+            Команда корекции времени
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.numProtocol">
+            <summary>
+            Номер протокола
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.TleData">
+            <summary>
+            Текущие навигационные данные
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.RxProfiles">
+            <summary>
+            Профили приема данных
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.TxProfiles">
+            <summary>
+            Профили передачи данных
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ActiveRxProfil">
+            <summary>
+            Текущий профиль на прием (в сеансе)
+            </summary>
+        </member>
+        <member name="P:INav.ISatIni.ActiveTxProfil">
+            <summary>
+            Теущий профиль на передачу (в сеансе)
+            </summary>
+        </member>
+        <member name="T:INav.ISatTle">
+            <summary>
+            Интерфейс настроек навигационных данных спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatTle.SatName">
+            <summary>
+            Имя спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatTle.str1">
+            <summary>
+            Первая строка двухстрочного элемента
+            </summary>
+        </member>
+        <member name="P:INav.ISatTle.str2">
+            <summary>
+            Вторая строка двухстрочного элемента
+            </summary>
+        </member>
+        <member name="P:INav.ISatTle.Source">
+            <summary>
+            Источник навигационных данных
+            </summary>
+        </member>
+        <member name="P:INav.ISatTle.SourceDate">
+            <summary>
+            Дата получения нав данных
+            </summary>
+        </member>
+        <member name="P:INav.ISatTle.Tle">
+            <summary>
+            Навигационные данные
+            </summary>
+        </member>
+        <member name="T:INav.INavIni">
+            <summary>
+            Настройки Навигатора
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.WordProtocol">
+             <summary>
+            Создавать протокол Word в задании "Отображить счетчик ошибок"
+             </summary>
+        </member>
+        <member name="P:INav.INavIni.TaskListShowControl">
+            <summary>
+            Показывать сообщения контроля в менеджере заданий
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.TaskListSound">
+            <summary>
+            Звук в менеджере заданий
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.Culture">
+            <summary>
+            Культура, язык
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.AllowNKU">
+            <summary>
+            Разрешен ли режим наземного комплекса
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.BootedMode">
+            <summary>
+            Режим, в котором загружилась программа
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.SaveFormPosition">
+            <summary>
+            Сохранять положеие главного и дополнительных окон
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.DesignEn">
+            <summary>
+            Разрешить искать средства разработки
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.InternetEn">
+            <summary>
+            Разрешить подключение к интернет
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.NullElevation">
+            <summary>
+            Нулевой угол места
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.BeforePass">
+            <summary>
+            Время упреждения сеанса
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.AfterPass">
+            <summary>
+            Время послеследования сеанса
+            </summary>
+        </member>
+        <member name="P:INav.INavIni.Satellites">
+            <summary>
+            Список спутников
+            </summary>
+        </member>
+        <member name="T:INav.MessageType">
+            <summary>
+            Тип показываемых сообщений
+            </summary>
+        </member>
+        <member name="T:INav.MessageButtons">
+            <summary>
+            Тип кнопочек на сообщении
+            </summary>
+        </member>
+        <member name="T:INav.IWaitForm">
+            <summary>
+            Окошко "подождите"
+            </summary>
+        </member>
+        <member name="M:INav.IWaitForm.ShowWait">
+            <summary>
+            Показать собцение
+            </summary>
+        </member>
+        <member name="M:INav.IWaitForm.SetPosition(System.Int32)">
+            <summary>
+            Процесс выполнения 
+            </summary>
+            <param name="Value">значение прогресса от 0 до 100</param>
+        </member>
+        <member name="M:INav.IWaitForm.CloseWait">
+            <summary>
+            Закрыть сообщение, 
+            с эого момента объектом пользоваться нельзя
+            </summary>
+        </member>
+        <member name="T:INav.InfoDataString">
+            <summary>
+            Класс данных для передачи - одна строка
+            </summary>
+        </member>
+        <member name="F:INav.InfoDataString.BytesInString">
+            <summary>
+            Количество байт в строке
+            </summary>
+        </member>
+        <member name="F:INav.InfoDataString.Bytes">
+            <summary>
+            Строка данных длиной BytesInString
+            </summary>
+        </member>
+        <member name="F:INav.InfoDataString.NeedTx">
+            <summary>
+            Строка фильтра на передачу
+            </summary>
+        </member>
+        <member name="T:INav.IInfoForTx">
+            <summary>
+            Передача блоков данных
+            </summary>
+        </member>
+        <member name="M:INav.IInfoForTx.Load(System.String)">
+            <summary>
+            Открыть из файла
+            </summary>
+            <param name="fn"></param>
+        </member>
+        <member name="M:INav.IInfoForTx.Translate(System.Boolean)">
+            <summary>
+            Передать
+            </summary>
+        </member>
+        <member name="P:INav.IInfoForTx.FileName">
+            <summary>
+            Имя файла
+            </summary>
+        </member>
+        <member name="P:INav.IInfoForTx.Data">
+            <summary>
+            Данные
+            </summary>
+        </member>
+        <member name="P:INav.IInfoForTx.Path">
+            <summary>
+            Передаваемая часть, начиная с нуля
+            </summary>
+        </member>
+        <member name="P:INav.IInfoForTx.TxOnlyNeeded">
+            <summary>
+            Если true,  то передавать как дозапись
+            </summary>
+        </member>
+        <member name="P:INav.IInfoForTx.BinaryData">
+            <summary>
+            Бинарные данные. Такой тип данных может использоватеться некоторыми плагинами
+            </summary>
+        </member>
+        <member name="T:INav.CustomInfoForTx">
+            <summary>
+            Настраиваемые класс описания данных для передачи
+            </summary>
+        </member>
+        <member name="M:INav.CustomInfoForTx.Add(System.String)">
+            <summary>
+            Добавить файл
+            </summary>
+            <param name="fn"></param>
+        </member>
+        <member name="M:INav.CustomInfoForTx.Translate(System.Boolean)">
+            <summary>
+            Передать
+            </summary>
+        </member>
+        <member name="P:INav.CustomInfoForTx.Data">
+            <summary>
+            Хранилище данных
+            </summary>
+        </member>
+        <member name="P:INav.CustomInfoForTx.Path">
+            <summary>
+            Передаваемая часть, начиная с нуля
+            Одна часть - 256 строк
+            </summary>
+        </member>
+        <member name="P:INav.CustomInfoForTx.TxOnlyNeeded">
+            <summary>
+            Передавать с фильтром, только то, что нужно.
+            </summary>
+        </member>
+        <member name="P:INav.CustomInfoForTx.BinaryData">
+            <summary>
+            Бинарные данные. Такой тип данных может использоватеться некоторыми плагинами
+            </summary>
+        </member>
+        <member name="T:INav.ResetByte">
+            <summary>
+            Коды сброса
+            </summary>
+        </member>
+        <member name="T:INav.Convertors.TmTypeConverter">
+            <summary>
+            TypeConverter для списка 
+            </summary>
+        </member>
+        <member name="M:INav.Convertors.TmTypeConverter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            Будем предоставлять выбор из списка
+            </summary>
+        </member>
+        <member name="M:INav.Convertors.TmTypeConverter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            ... и только из списка
+            </summary>
+        </member>
+        <member name="M:INav.Convertors.TmTypeConverter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)">
+            <summary>
+            А вот и список
+            </summary>
+        </member>
+        <member name="F:INav.Hex8ParamCmdEditorForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:INav.Hex8ParamCmdEditorForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:INav.Hex8ParamCmdEditorForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:INav.TaskConverter">
+            <summary>
+            Базовый класс для визуальных заданий
+            
+            Рекомендации:
+            Использовать свойства завсимостей и привязывать компоненты шаблона именно к ним
+            Получать шаблон из статического ресурса сборки
+            Допускается возвращать DataTemplate null - это означает использовать шаблон по умолчанию
+            
+            </summary>
+        </member>
+        <member name="T:INav.INonRealyWaitTask">
+            <summary>
+            Задание имеет вермя выполнение отличающееся от зарежки после задания
+            </summary>
+        </member>
+        <member name="P:INav.INonRealyWaitTask.RealWaitTime">
+            <summary>
+            Действительно вермя выполнения задания
+            </summary>
+        </member>
+        <member name="T:INav.Navig.SunModel">
+            <summary>
+            Модель Солнца
+            </summary>
+        </member>
+        <member name="M:INav.Navig.SunModel.GetPosition(System.DateTime)">
+            <summary>
+            Положение солнца (только направление)
+            </summary>
+            <param name="DT">время Гринвическое</param>
+            <returns>ECI координата</returns>
+        </member>
+        <member name="M:INav.Navig.SunModel.SatExposureLigth(Zeptomoby.OrbitTools.Eci,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="sat"></param>
+            <param name="equTime">Время в UTC</param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.Navig.SunModel.EquQ(Zeptomoby.OrbitTools.Eci,System.DateTime,System.Double@,System.Double@)">
+            <summary>
+            Расчет углов
+            </summary>
+            <param name="sat"></param>
+            <param name="equTime"></param>
+            <param name="qe">Угловой полурадиус Земли</param>
+            <param name="qs">Угловой полурадиус Солнца</param>
+            <returns>Угол между центрами Солнца и Земли</returns>
+        </member>
+        <member name="P:INav.Navig.SunModel.Position">
+            <summary>
+            Положение солнца (только направление)
+            </summary>
+            <returns>ECI координата</returns>
+        </member>
+        <member name="T:INav.ICaptionTask">
+            <summary>
+            Показывает. что задание явяляется заголовком (названием) всего списка
+            </summary>
+        </member>
+        <member name="T:INav.frmData">
+            <summary>
+            Данные, в которых есть данные о степени доверия
+            </summary>
+        </member>
+        <member name="F:INav.frmData.Data">
+            <summary>
+            Сами данные
+            </summary>
+        </member>
+        <member name="F:INav.frmData.Correct">
+            <summary>
+            Уровень доверия к параметру
+            Чем меньше, тем лучше
+            0 - нет ошибок при приеме, контрольная ума сходится точно
+            1 - одна ошибка при преме, достаточная степеньдоверия
+            2 - две ошибки, уровень доверия низкий
+            3 - три ошибки, восстановление невозможно
+            4...255 - зарезервированные позиции, восстановление невозможно
+            </summary>
+        </member>
+        <member name="M:INav.frmData.#ctor(System.UInt64,System.Byte)">
+            <summary>
+            Конструктор
+            </summary>
+            <param name="data">Данные</param>
+            <param name="correct">Степень доверия</param>
+        </member>
+        <member name="T:INav.IParametrValue">
+            <summary>
+            Интерфейс базовой версии
+            Резуальтат вычислений параметра
+            Содержи строковое и ссылочное объектное значение 
+            и показатель находжения данных в допуске
+            </summary>
+        </member>
+        <member name="P:INav.IParametrValue.Value">
+            <summary>
+            Строковое значение
+            </summary>
+        </member>
+        <member name="P:INav.IParametrValue.Normal">
+            <summary>
+            Значение находится в допуске
+            </summary>
+        </member>
+        <member name="P:INav.IParametrValue.Correct">
+            <summary>
+            Уровень доверия к параметру
+            Чем меньше, тем лучше
+            0 - нет ошибок при приеме, контрольная ума сходится точно
+            1 - одна ошибка при преме, достаточная степеньдоверия
+            2 - две ошибки, уровень доверия низкий
+            3 - три ошибки, восстановление невозможно
+            4...255 - зарезервированные позиции, восстановление невозможно
+            </summary>
+        </member>
+        <member name="P:INav.IParametrValue.Object">
+            <summary>
+            Ссылка на объект результата, например (object)int
+            Если приведение невозможно, то ссылка на (object)Value
+            </summary>
+        </member>
+        <member name="T:INav.IBaseParametr">
+            <summary>
+            Интерфейс базовой версии
+            Базовый параметр
+            </summary>
+        </member>
+        <member name="M:INav.IBaseParametr.FormatSn">
+            <summary>
+            Форматированная строка короткоо имени до 8-и символов
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseParametr.GetData(System.Byte[],System.Byte[])">
+            <summary>
+            Получение только данных параметра, без обработки
+            </summary>
+            <param name="A">Массив данных</param>
+            <param name="corr">Массив, показывающий степернь доверия к данным
+            0 - нет ошибок при приеме, контрольная ума сходится точно
+            1 - одна ошибка при преме, достаточная степеньдоверия
+            2 - две ошибки, уровень доверия низкий
+            3 - три ошибки, восстановление невозможно
+            4...255 - зарезервированные позиции, восстановление невозможно
+            </param>
+            <returns>данные параметра</returns>
+        </member>
+        <member name="M:INav.IBaseParametr.GetValue(System.Byte[],System.Byte[])">
+            <summary>
+            Получение значения параметра
+            </summary>
+            <param name="A">Массив данных</param>
+            <param name="corr">Массив, показывающий степернь доверия к данным
+            0 - нет ошибок при приеме, контрольная ума сходится точно
+            1 - одна ошибка при преме, достаточная степеньдоверия
+            2 - две ошибки, уровень доверия низкий
+            3 - три ошибки, восстановление невозможно
+            4...255 - зарезервированные позиции, восстановление невозможно
+            </param>
+            <returns>значение параметра</returns>
+        </member>
+        <member name="M:INav.IBaseParametr.GetVI(System.Byte[])">
+            <summary>
+            Получение строки виртуального инструмента для этого параметра
+            </summary>
+            <param name="A">Массив данных</param>
+            <returns>Строка параметра для визуального инструмента</returns>
+        </member>
+        <member name="P:INav.IBaseParametr.FullName">
+            <summary>
+            Полное имя для отображения
+            </summary>
+        </member>
+        <member name="P:INav.IBaseParametr.ShortName">
+            <summary>
+            Короткое имя для хаклоговнов таблиц
+            </summary>
+        </member>
+        <member name="P:INav.IBaseParametr.Measure">
+            <summary>
+            Единицы измерения параметра
+            </summary>
+        </member>
+        <member name="P:INav.IBaseParametr.Hint">
+            <summary>
+            Подсказка пользователю - описание физического значения параметра
+            </summary>
+        </member>
+        <member name="T:INav.ITmPropertes">
+            <summary>
+            Интерфейс базовой версии
+            Свойства телемерии, определяемые 
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.Name">
+            <summary>
+            Имя телеметрии, имя закладки
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.TypeInf">
+            <summary>
+            Строка, определяющая тип информации
+            "TM" - кадровая телеметрия
+            "TMN" - накопительная телеметрия
+            "Plan" - рапорт таймера
+            "ID" - данные
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.Description">
+            <summary>
+            Описание телеметрии
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.StrCount">
+            <summary>
+            Количество строк при передаче
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.Povt">
+            <summary>
+            Количество повторов (1 или 3)
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.Pusk">
+            <summary>
+            Байт пуска
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.Mask">
+            <summary>
+            Маска для определения типа информации
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.Filter">
+            <summary>
+            Фильтр для попределения типа информации
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.ColCount">
+            <summary>
+            Количество столбцов при отображении
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.UseSector">
+            <summary>
+            Использование сектора для определения типа информации
+            Либо значение сектора, либо -1 в случае неиспользовании сектора
+            при определении типа информации
+            </summary>
+        </member>
+        <member name="P:INav.ITmPropertes.IsTm">
+            <summary>
+            Принадлежность к телеметрии
+            Как исключение, план принадлежит к телеметрии
+            </summary>
+        </member>
+        <member name="T:INav.IBaseTmFormuls">
+            <summary>
+            Интерфейс базовой версии
+            Базовый тип телеметрических преобразований
+            Определяет одну телеметрию с множеством параметров
+            </summary>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.FullNames">
+            <summary>
+            Массив полных имент
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.ShortNames">
+            <summary>
+            Массив коротких имен
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.Measures">
+            <summary>
+            Массив единиц измерения
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.Hints">
+            <summary>
+            Массив подсказок
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.Caption">
+            <summary>
+            Строка заголовка для табличного представления
+            при сохранении в текстовом виде
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.Values(System.Byte[],System.Byte[])">
+            <summary>
+            Массив значений параметров
+            </summary>
+            <param name="A">Массив байт</param>
+            <param name="corr">Массив, показывающий степернь доверия к данным
+            0 - нет ошибок при приеме, контрольная ума сходится точно
+            1 - одна ошибка при преме, достаточная степеньдоверия
+            2 - две ошибки, уровень доверия низкий
+            3 - три ошибки, восстановление невозможно
+            4...255 - зарезервированные позиции, восстановление невозможно
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.ViValues(System.Byte[])">
+            <summary>
+            Массив данных для виртуального инструмента
+            </summary>
+            <param name="A">Массив байт</param>
+            <returns></returns>
+        </member>
+        <member name="M:INav.IBaseTmFormuls.ViString(System.Byte[])">
+            <summary>
+            Строка виртуального инструмента
+            </summary>
+            <param name="A">Массив байт</param>
+            <returns></returns>
+        </member>
+        <member name="P:INav.IBaseTmFormuls.TmParam">
+            <summary>
+            Свойтва телеметрии
+            </summary>
+        </member>
+        <member name="P:INav.IBaseTmFormuls.Parametrs">
+            <summary>
+            Массив параметров
+            </summary>
+        </member>
+        <member name="T:INav.ISatTmProperty">
+            <summary>
+            Интерфейс базовой версии
+            Телеметрические свойства спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatTmProperty.ByteInString">
+            <summary>
+            Количество байт в строке, определяет разрядную 
+            структуру бортового компьютера
+            </summary>
+        </member>
+        <member name="T:INav.IVertionCountrol">
+            <summary>
+            Контроль версии
+            </summary>
+        </member>
+        <member name="P:INav.IVertionCountrol.Vertion">
+            <summary>
+            Версия, определяет набор интерфейсов, 
+            которые реализует эта сборка
+            Начальная версия 10, использует базовые интерфейчы, 
+            далее 11-ая - первую редакцию и т.д.
+            </summary>
+        </member>
+        <member name="T:INav.ISatFormuls">
+            <summary>
+            Интерфейс базовой версии
+            Параметры телеметрических преобразований для спутника
+            Определяет набор телеметрий с преобразованиями
+            </summary>
+        </member>
+        <member name="M:INav.ISatFormuls.FindTmByName(System.String)">
+            <summary>
+            Поиск телеметрии по имени
+            Если не найдена, то возвращается NULL
+            </summary>
+            <param name="tmName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:INav.ISatFormuls.SatProperty">
+            <summary>
+            Телеметрические свойства спутника
+            </summary>
+        </member>
+        <member name="P:INav.ISatFormuls.TmFormuls">
+            <summary>
+            Список телеметрический преобразований, поддерживаемый спутником
+            </summary>
+        </member>
+        <member name="T:Commands.CommDescription">
+            <summary>
+            Команда для сериализации в перечне команд
+            </summary>
+        </member>
+        <member name="M:Commands.CommDescription.FullName(Commands.Command)">
+            <summary>
+            Имя с параметрами (если есть)
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Id">
+            <summary>
+            Номер команды (идентификатор)
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Name">
+            <summary>
+            выполняемая функция, имя
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Description">
+            <summary>
+            Описание
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Acknowledge">
+            <summary>
+            Подтверждение действия
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.CancelAction">
+            <summary>
+            Отмена действия
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Note">
+            <summary>
+            Примечание
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Group">
+            <summary>
+            Группа (строка, разделенная запятыми с пробелом)
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Groups">
+            <summary>
+            Split разделенные группы
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Conf">
+            <summary>
+            Конфигурация
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.Span">
+            <summary>
+            Время выполения, информационная строка
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.ParamEditorClassName">
+            <summary>
+            Если есть, то это параметрическая команда, а в тексте редактор
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.ParamEditor">
+            <summary>
+            Обект редактора
+            </summary>
+        </member>
+        <member name="P:Commands.CommDescription.IsNumeric">
+            <summary>
+            Номер команды, если он номерной
+            </summary>
+        </member>
+    </members>
+</doc>
