@@ -16,14 +16,18 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="82*"/>
+            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="41*"/>
+            <ColumnDefinition Width="41*"/>
         </Grid.ColumnDefinitions>
         <Label Margin="3" Content="Список команд:"></Label>
         <ListView x:Name="CommandList" Grid.Column="0" Grid.Row="1" Grid.RowSpan="9" Margin="5" Loaded="CommandList_OnLoaded"></ListView>
-        <Label Margin="3" Grid.Column="1" Content="Свойства:"></Label>
-        <ListView Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="7" Margin="5"></ListView>
-        <Button Grid.Column="2" Grid.Row="9" Margin="3" Content="Сохранить"></Button>
+        <Label Margin="3" Grid.Column="1" Content="Свойства:" Grid.ColumnSpan="2"></Label>
+        <ListView Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="7" Margin="5"></ListView>
+        <Button Grid.Column="3" Grid.Row="9" Margin="3" Content="Сохранить" Grid.ColumnSpan="2"></Button>
+        <ComboBox Grid.Column="1" Grid.Row="1" Margin="3" Grid.ColumnSpan="2"></ComboBox>
+        <Button x:Name="AddBt" Grid.Column="3" Grid.Row="1" Margin="3" Content="Добавить"></Button>
     </Grid>
 </Window>
